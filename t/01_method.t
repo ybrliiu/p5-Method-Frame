@@ -6,18 +6,18 @@ package Math {
     use Types::Standard qw( :types );
 
     method add => (
-        isa  => Int,
-        args => [ Int, Int ],
-        code => sub {
+        isa    => Int,
+        params => [ Int, Int ],
+        code   => sub {
           my ($class, $num1, $num2) = @_;
           $num1 + $num2;
         },
     );
 
     method minus => (
-        isa  => Int,
-        args => [ Int, Int ],
-        code => sub {
+        isa    => Int,
+        params => [ Int, Int ],
+        code   => sub {
           my ($class, $num1, $num2) = @_;
           "$num1 - $num2";
         },
@@ -25,13 +25,13 @@ package Math {
 
 }
 
-subtest 'all parameter type and return type is matched' => sub {
+subtest 'all parameters type and return type is matched' => sub {
     is( Math->add(2, 5), 7 );
 };
 
 subtest 'parameter mismatch' => sub {
     ok(my $e = dies { Math->add("string", "string") });
-    my $err_mes = quotemeta q{0Th Parameter type is mismatch. (Aragument type is 'Int' but Parameter value is 'string'.)};
+    my $err_mes = quotemeta q{0Th Parameter type is mismatch. (Parameter type is 'Int' but Argument value is 'string'.)};
     like $e, qr!^${err_mes}!;
 };
 

@@ -1,10 +1,10 @@
-package Mule::Meta::Method::ListArguments;
+package Mule::Meta::Method::ListParameters;
 use strict;
 use warnings;
 use utf8;
 use Carp ();
 
-use parent 'Mule::Meta::Method::Arguments';
+use parent 'Mule::Meta::Method::Parameters';
 
 use Class::Accessor::Lite (
     ro => [qw( list )],
@@ -24,22 +24,20 @@ sub num {
 sub validate {
     my ($self, @args) = @_;
 
-    return ( undef, 'Too many arguments' ) if scalar @args > $self->num;
+    return ( undef, 'Too few args' ) if scalar @args < $self->num;
+    return ( undef, 'Too many args' ) if scalar @args > $self->num;
 
     my @valid_args = map {
-        my ($meta, $arg)       = ($self->list->[$_], $args[$_]);
-        my ($valid_data, $err) = $meta->validate($arg);
+        my ($meta, $param)      = ($self->list->[$_], $args[$_]);
+        my ($valid_param, $err) = $meta->validate($param);
         if ( defined $err ) {
             return ( undef, "${_}Th $err" );
         }
         else {
-            $valid_data;
+            $valid_param;
         }
     } 0 .. $self->num - 1;
-
-    return ( undef, 'Too few arguments' ) if scalar @valid_args < $self->num;
-
-    return ( \@valid_args, undef );
+    ( \@valid_args, undef );
 }
 
 1;

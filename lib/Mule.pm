@@ -7,17 +7,21 @@ use version; our $VERSION = version->declare('v0.0.1');
 use Exporter qw( import );
 our @EXPORT = qw( method );
 
+use Carp ();
 use Sub::Install ();
 use Mule::Meta::Method;
 
 sub method {
     my ($name, %args) = @_;
     Carp::croak 'Method name is missing.' unless $name;
+    for my $arg_name (qw[ isa params code ]) {
+        Carp::croak "Missing parameter '$arg_name'" unless $args{$arg_name};
+    }
 
     my $meta_method = Mule::Meta::Method->new(
         name        => $name,
         return_type => $args{isa},
-        arguments   => $args{args},
+        params      => $args{params},
         code        => $args{code},
     );
     Sub::Install::install_sub({

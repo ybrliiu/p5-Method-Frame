@@ -1,12 +1,10 @@
-package Mule::Meta::Method::Arguments;
+package Mule::Meta::Method::Parameters;
 use strict;
 use warnings;
 use utf8;
 use Carp ();
 
-sub abstract_err {
-    Carp::croak 'This is abstract method.';
-}
+sub abstract_err { Carp::croak 'This is abstract method.' }
 
 sub new { $_[0]->abstract_err }
 

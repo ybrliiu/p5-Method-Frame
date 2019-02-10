@@ -1,15 +1,13 @@
-package Mule::Meta::Method::ReturnType;
+package Mule::Meta::Method::RequiredParameter;
+use 5.014004;
 use strict;
 use warnings;
 use utf8;
 
-use Carp ();
-use Scalar::Util ();
-use Mule::Util;
+use parent 'Mule::Meta::Method::Parameter';
 
-use Class::Accessor::Lite (
-    ro => [qw( constraint )],
-);
+use Carp ();
+use Mule::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -23,11 +21,12 @@ sub new {
 
 sub validate {
     Carp::croak 'Too few arguments' if @_ < 2;
-    my ($self, $return_value) = @_;
-    my $constraint = $self->constraint;
-    $constraint->check($return_value)
-        ? undef
-        : qq{Return type is mismatch. (Constraint is '$constraint' but method code returns '$return_value')};
+    my ($self, $argument) = @_;
+    $self->constraint->check($argument)
+        ? ( $argument, undef )
+        : ( undef, qq{Parameter type is mismatch. (Parameter type is '@{[ $self->constraint ]}' but Argument value is '$argument'.)} );
 }
+
+1;
 
 1;

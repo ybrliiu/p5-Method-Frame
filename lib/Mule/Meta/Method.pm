@@ -4,32 +4,32 @@ use warnings;
 use utf8;
 
 use Scalar::Util ();
-use Mule::Meta::Method::Argument;
-use Mule::Meta::Method::ListArguments;
+use Mule::Meta::Method::RequiredParameter;
+use Mule::Meta::Method::ListParameters;
 use Mule::Meta::Method::ReturnType;
 
 use Class::Accessor::Lite (
-    ro => [qw( name arguments return_type code )],
+    ro => [qw( name params return_type code )],
 );
 
 sub new {
     my ($class, %args) = @_;
-    for my $param_name (qw[ name arguments return_type code ]) {
-        Carp::croak "Missing parameter '$param_name'" unless $args{$param_name};
+    for my $arg_name (qw[ name params return_type code ]) {
+        Carp::croak "Missing argeter '$arg_name'" unless $args{$arg_name};
     }
 
     bless +{
         name        => $args{name},
         return_type => $class->create_return_type($args{return_type}),
-        arguments   => $class->create_arguments($args{arguments}),
+        params      => $class->create_params($args{params}),
         code        => $args{code},
     }, $class;
 }
 
-sub create_arguments {
-    my ($class, $args) = @_;
-    my @arguments = map { Mule::Meta::Method::Argument->new($_) } @$args;
-    Mule::Meta::Method::ListArguments->new(\@arguments);
+sub create_params {
+    my ($class, $params) = @_;
+    my @params_objects = map { Mule::Meta::Method::RequiredParameter->new($_) } @$params;
+    Mule::Meta::Method::ListParameters->new(\@params_objects);
 }
 
 sub create_return_type {
@@ -42,7 +42,7 @@ sub build {
     sub {
         my $this = shift;
 
-        my ($valid_args, $err) = $self->arguments->validate(@_);
+        my ($valid_args, $err) = $self->params->validate(@_);
         if ( defined $err ) {
             Carp::croak $err;
         }
