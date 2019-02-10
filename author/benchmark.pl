@@ -19,6 +19,19 @@ package Math {
         },
     );
 
+    method addh => (
+        isa    => Int,
+        params => +{
+          num1 => Int,
+          num2 => Int,
+        },
+        code   => sub {
+          my ($class, %args) = @_;
+          my ($num1, $num2) = @args{qw( num1 num2 )};
+          $num1 + $num2;
+        },
+    );
+
     sub add3 {
         my ($class, $num1, $num2) = @_;
         $num1 + $num2;
@@ -41,8 +54,10 @@ cmpthese(
         0,
         +{
             add   => sub { Math->add(1, 3) },
+            addh  => sub { Math->addh({ num1 => 1, num2 => 3 }) },
             nomal => sub { Math->add3(1, 3) },
             ddv   => sub { Math->add4(1, 3) },
         }
     )
 );
+

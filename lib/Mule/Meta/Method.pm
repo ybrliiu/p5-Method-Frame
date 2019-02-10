@@ -6,6 +6,7 @@ use utf8;
 use Scalar::Util ();
 use Mule::Util;
 use Mule::Meta::Method::ListParameters;
+use Mule::Meta::Method::HashParameters;
 use Mule::Meta::Method::RequiredParameter;
 use Mule::Meta::Method::OptionalParameter;
 use Mule::Meta::Method::ReturnType;
@@ -37,10 +38,12 @@ sub create_params {
         $params;
     }
     elsif ( ref $params eq 'ARRAY' ) {
-        my @params_objects = map { Mule::Meta::Method::RequiredParameter->new($_) } @$params;
+        my @params_objects = map { $class->create_param($_) } @$params;
         Mule::Meta::Method::ListParameters->new(\@params_objects);
     }
     elsif ( ref $params eq 'HASH' ) {
+        my %params_objects = map { $_ => $class->create_param($params->{$_}) } keys %$params;
+        Mule::Meta::Method::HashParameters->new(\%params_objects);
     }
     else {
         Carp::confess 'Invalid parameters option passed.';
@@ -95,9 +98,7 @@ sub build {
         my $this = shift;
 
         my ($valid_args, $err) = $self->params->validate(@_);
-        if ( defined $err ) {
-            Carp::croak $err;
-        }
+        Carp::croak $err if defined $err;
 
         my $return_value = $self->code->($this, @$valid_args);
 
