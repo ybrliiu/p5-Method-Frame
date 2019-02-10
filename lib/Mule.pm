@@ -1,5 +1,5 @@
 package Mule;
-use 5.008001;
+use 5.014004;
 use strict;
 use warnings;
 use version; our $VERSION = version->declare('v0.0.1');
@@ -7,7 +7,6 @@ use version; our $VERSION = version->declare('v0.0.1');
 use Exporter qw( import );
 our @EXPORT = qw( method );
 
-use Carp ();
 use Sub::Install ();
 use Mule::Meta::Method;
 
@@ -16,6 +15,7 @@ sub method {
     Carp::croak 'Method name is missing.' unless $name;
 
     my $meta_method = Mule::Meta::Method->new(
+        name        => $name,
         return_type => $args{isa},
         arguments   => $args{args},
         code        => $args{code},

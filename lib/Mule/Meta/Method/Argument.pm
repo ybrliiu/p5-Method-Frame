@@ -60,7 +60,9 @@ sub validate {
             defined $maybe_arg ? $maybe_arg : $self->default;
         }
     };
-    $self->constraint->check($arg) ? $arg : Carp::croak 'Invalid type';
+    $self->constraint->check($arg)
+        ? ( $arg, undef )
+        : ( undef, qq{Parameter type is mismatch. (Aragument type is '@{[ $self->constraint ]}' but Parameter value is '$arg'.)} );
 }
 
 1;

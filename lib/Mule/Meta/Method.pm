@@ -9,15 +9,17 @@ use Mule::Meta::Method::ListArguments;
 use Mule::Meta::Method::ReturnType;
 
 use Class::Accessor::Lite (
-    ro => [qw( arguments return_type code )],
+    ro => [qw( name arguments return_type code )],
 );
 
 sub new {
     my ($class, %args) = @_;
-    for my $param_name (qw[ arguments return_type code ]) {
+    for my $param_name (qw[ name arguments return_type code ]) {
         Carp::croak "Missing parameter '$param_name'" unless $args{$param_name};
     }
+
     bless +{
+        name        => $args{name},
         return_type => $class->create_return_type($args{return_type}),
         arguments   => $class->create_arguments($args{arguments}),
         code        => $args{code},
@@ -39,9 +41,17 @@ sub build {
     my $self = shift;
     sub {
         my $this = shift;
-        my $valid_args   = $self->arguments->validate(@_);
+
+        my ($valid_args, $err) = $self->arguments->validate(@_);
+        if ( defined $err ) {
+            Carp::croak $err;
+        }
+
         my $return_value = $self->code->($this, @$valid_args);
-        $self->return_type->validate($return_value);
+
+        if ( my $err = $self->return_type->validate($return_value) ) {
+            Carp::croak 'Method ' . $self->name . ' ' . $err;
+        }
         $return_value;
     };
 }

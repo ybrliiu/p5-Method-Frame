@@ -23,13 +23,23 @@ sub num {
 
 sub validate {
     my ($self, @args) = @_;
-    Carp::croak 'Too many arguments' if scalar @args > $self->num;
-    my @valid_data = map {
-        my ($meta, $arg) = ($self->list->[$_], $args[$_]);
-        $meta->validate($arg);
+
+    return ( undef, 'Too many arguments' ) if scalar @args > $self->num;
+
+    my @valid_args = map {
+        my ($meta, $arg)       = ($self->list->[$_], $args[$_]);
+        my ($valid_data, $err) = $meta->validate($arg);
+        if ( defined $err ) {
+            return ( undef, "${_}Th $err" );
+        }
+        else {
+            $valid_data;
+        }
     } 0 .. $self->num - 1;
-    Carp::croak 'Too few arguments' if scalar @valid_data < $self->num;
-    return \@valid_data;
+
+    return ( undef, 'Too few arguments' ) if scalar @valid_args < $self->num;
+
+    return ( \@valid_args, undef );
 }
 
 1;

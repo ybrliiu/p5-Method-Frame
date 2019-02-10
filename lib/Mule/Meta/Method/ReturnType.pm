@@ -24,7 +24,10 @@ sub new {
 sub validate {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($self, $return_value) = @_;
-    $self->constraint->check($return_value) or Carp::croak 'Return type is mismatch';
+    my $constraint = $self->constraint;
+    $constraint->check($return_value)
+        ? undef
+        : qq{Return type is mismatch. (Constraint is '$constraint' but method code returns '$return_value')};
 }
 
 1;
