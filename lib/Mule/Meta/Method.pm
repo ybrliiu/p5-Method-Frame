@@ -103,7 +103,7 @@ sub build {
         my $return_value = $self->code->($this, @$valid_args);
 
         if ( my $err = $self->return_type->validate($return_value) ) {
-            Carp::croak 'Method ' . $self->name . ' ' . $err;
+            Carp::croak qq{Method '@{[ $self->name ]}'s $err};
         }
         $return_value;
     };

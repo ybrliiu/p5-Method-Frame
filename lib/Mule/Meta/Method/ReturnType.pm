@@ -27,7 +27,7 @@ sub validate {
     my $constraint = $self->constraint;
     $constraint->check($return_value)
         ? undef
-        : qq{Return type is mismatch. (Constraint is '$constraint' but method code returns '$return_value')};
+        : qq{Return type does not pass type constraint '$constraint' because : Method code returns '$return_value')};
 }
 
 1;

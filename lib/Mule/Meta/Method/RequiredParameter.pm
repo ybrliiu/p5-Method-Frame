@@ -24,7 +24,7 @@ sub validate {
     my ($self, $argument) = @_;
     $self->constraint->check($argument)
         ? ( $argument, undef )
-        : ( undef, qq{Parameter type is mismatch. (Parameter type is '@{[ $self->constraint ]}' but Argument value is '$argument'.)} );
+        : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.)} );
 }
 
 1;

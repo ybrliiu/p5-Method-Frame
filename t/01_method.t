@@ -31,13 +31,13 @@ subtest 'all parameters type and return type is matched' => sub {
 
 subtest 'parameter mismatch' => sub {
     ok(my $e = dies { Math->add("string", "string") });
-    my $err_mes = quotemeta q{0Th Parameter type is mismatch. (Parameter type is 'Int' but Argument value is 'string'.)};
+    my $err_mes = quotemeta q{0Th Parameter does not pass type constraint 'Int' because : Argument value is 'string'.)};
     like $e, qr!^${err_mes}!;
 };
 
 subtest 'return type mismatch' => sub {
     ok(my $e = dies { Math->minus(5, 3) });
-    my $err_mes = quotemeta q{Method minus Return type is mismatch. (Constraint is 'Int' but method code returns '5 - 3')};
+    my $err_mes = quotemeta q{Method 'minus's Return type does not pass type constraint 'Int' because : Method code returns '5 - 3')};
     like $e, qr!^${err_mes}!;
 };
 
