@@ -1,14 +1,14 @@
 # NAME
 
-Mule - It's new $module
+Method::Frame - It's new $module
 
 # SYNOPSIS
 
-    use Mule;
+    use Method::Frame;
 
 # DESCRIPTION
 
-Mule is ...
+Method::Frame is ...
 
 # LICENSE
 

@@ -1,4 +1,4 @@
-package Mule;
+package Method::Frame;
 use 5.014004;
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ our @EXPORT = qw( method );
 
 use Carp ();
 use Sub::Install ();
-use Mule::Meta::Method;
+use Method::Frame::Meta::Method;
 
 sub method {
     my ($name, %args) = @_;
@@ -18,7 +18,7 @@ sub method {
         Carp::croak "Missing parameter '$arg_name'" unless $args{$arg_name};
     }
 
-    my $meta_method = Mule::Meta::Method->new(
+    my $meta_method = Method::Frame::Meta::Method->new(
         name        => $name,
         return_type => $args{isa},
         params      => $args{params},
@@ -38,13 +38,13 @@ __END__
 
 =head1 NAME
 
-Mule - It's new $module
+Method::Frame - It's new $module
 
 =head1 SYNOPSIS
 
     package Math {
 
-        use Mule;
+        use Method::Frame;
         use Types::Stanard qw( :types );
 
         method add => (
@@ -78,7 +78,7 @@ Mule - It's new $module
 
 =head1 DESCRIPTION
 
-Mule is ...
+Method::Frame is ...
 
 =head1 LICENSE
 

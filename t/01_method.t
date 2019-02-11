@@ -2,7 +2,7 @@ use Test2::V0;
 
 package Math {
 
-    use Mule;
+    use Method::Frame;
     use Types::Standard qw( :types );
 
     method add => (

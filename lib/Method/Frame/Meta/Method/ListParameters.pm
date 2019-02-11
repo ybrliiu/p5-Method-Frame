@@ -1,10 +1,10 @@
-package Mule::Meta::Method::ListParameters;
+package Method::Frame::Meta::Method::ListParameters;
 use strict;
 use warnings;
 use utf8;
 use Carp ();
 
-use parent 'Mule::Meta::Method::Parameters';
+use parent 'Method::Frame::Meta::Method::Parameters';
 
 use Class::Accessor::Lite (
     ro => [qw( list )],

@@ -1,4 +1,4 @@
-package Mule::Meta::Method::Parameters;
+package Method::Frame::Meta::Method::Parameters;
 use strict;
 use warnings;
 use utf8;

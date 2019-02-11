@@ -6,7 +6,7 @@ use lib './lib';
 
 package Math {
 
-    use Mule;
+    use Method::Frame;
     use Types::Standard qw( :types );
     use Data::Validator;
 

@@ -1,11 +1,11 @@
-package Mule::Meta::Method::HashParameters;
+package Method::Frame::Meta::Method::HashParameters;
 use strict;
 use warnings;
 use utf8;
 
 use Carp ();
 
-use parent 'Mule::Meta::Method::Parameters';
+use parent 'Method::Frame::Meta::Method::Parameters';
 
 use Class::Accessor::Lite (
     ro => [qw( hash )],

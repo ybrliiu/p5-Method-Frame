@@ -1,23 +1,23 @@
-package Mule::Meta::Method::OptionalParameter;
+package Method::Frame::Meta::Method::OptionalParameter;
 use 5.014004;
 use strict;
 use warnings;
 use utf8;
 
-use parent 'Mule::Meta::Method::Parameter';
+use parent 'Method::Frame::Meta::Method::Parameter';
 
 use Class::Accessor::Lite (
   ro => [qw( maybe_default )],
 );
 
 use Carp ();
-use Mule::Util;
+use Method::Frame::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $constraint, $maybe_default) = @_;
 
-    my $err = Mule::Util::ensure_type_constraint_object($constraint);
+    my $err = Method::Frame::Util::ensure_type_constraint_object($constraint);
     Carp::croak $err if defined $err;
 
     bless +{

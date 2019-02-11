@@ -1,4 +1,4 @@
-package Mule::Meta::Method::Parameter;
+package Method::Frame::Meta::Method::Parameter;
 use 5.014004;
 use strict;
 use warnings;

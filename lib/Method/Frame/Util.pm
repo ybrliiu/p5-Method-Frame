@@ -1,4 +1,4 @@
-package Mule::Util;
+package Method::Frame::Util;
 use 5.014004;
 use strict;
 use warnings;

@@ -1,19 +1,19 @@
-package Mule::Meta::Method::RequiredParameter;
+package Method::Frame::Meta::Method::RequiredParameter;
 use 5.014004;
 use strict;
 use warnings;
 use utf8;
 
-use parent 'Mule::Meta::Method::Parameter';
+use parent 'Method::Frame::Meta::Method::Parameter';
 
 use Carp ();
-use Mule::Util;
+use Method::Frame::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $constraint) = @_;
 
-    my $err = Mule::Util::ensure_type_constraint_object($constraint);
+    my $err = Method::Frame::Util::ensure_type_constraint_object($constraint);
     Carp::croak $err if defined $err;
 
     bless +{ constraint => $constraint }, $class;
