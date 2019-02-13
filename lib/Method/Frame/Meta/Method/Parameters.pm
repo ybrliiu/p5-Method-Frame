@@ -1,7 +1,7 @@
 package Method::Frame::Meta::Method::Parameters;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
+
 use Carp ();
 
 sub abstract_err { Carp::croak 'This is abstract method.' }

@@ -1,7 +1,6 @@
 package Method::Frame::Meta::Method::ReturnType;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();

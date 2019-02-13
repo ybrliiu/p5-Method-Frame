@@ -1,8 +1,6 @@
 package Method::Frame::Util;
-use 5.014004;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();

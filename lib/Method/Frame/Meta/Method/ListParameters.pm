@@ -1,7 +1,7 @@
 package Method::Frame::Meta::Method::ListParameters;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
+
 use Carp ();
 
 use parent 'Method::Frame::Meta::Method::Parameters';

@@ -1,8 +1,6 @@
 package Method::Frame::Meta::Method::RequiredParameter;
-use 5.014004;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
 
 use parent 'Method::Frame::Meta::Method::Parameter';
 

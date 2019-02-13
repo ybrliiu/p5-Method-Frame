@@ -1,7 +1,6 @@
 package Method::Frame::Meta::Method;
-use strict;
-use warnings;
-use utf8;
+
+use Method::Frame::Base;
 
 use Scalar::Util ();
 use Method::Frame::Util;

@@ -1,7 +1,5 @@
 package Method::Frame;
-use 5.014004;
-use strict;
-use warnings;
+use Method::Frame::Base;
 use version; our $VERSION = version->declare('v0.0.1');
 
 use Exporter qw( import );
