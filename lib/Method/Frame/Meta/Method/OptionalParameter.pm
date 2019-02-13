@@ -30,7 +30,7 @@ sub validate {
     my $argument = $maybe_argument // $self->maybe_default;
     $self->constraint->check($argument)
         ? ( $argument, undef )
-        : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.)} );
+        : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.} );
 }
 
 1;
