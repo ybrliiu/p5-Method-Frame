@@ -1,5 +1,5 @@
 package Method::Frame::Base;
-use 5.014004;
+use 5.014000;
 use strict;
 use warnings;
 use utf8;
