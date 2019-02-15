@@ -1,14 +1,14 @@
-package Method::Frame::Meta::Method;
+package Method::Frame::Meta::FramedMethod;
 
 use Method::Frame::Base;
 
 use Scalar::Util ();
 use Method::Frame::Util;
-use Method::Frame::Meta::Method::ListParameters;
-use Method::Frame::Meta::Method::HashParameters;
-use Method::Frame::Meta::Method::RequiredParameter;
-use Method::Frame::Meta::Method::OptionalParameter;
-use Method::Frame::Meta::Method::ReturnType;
+use Method::Frame::Meta::FramedMethod::ListParameters;
+use Method::Frame::Meta::FramedMethod::HashParameters;
+use Method::Frame::Meta::FramedMethod::RequiredParameter;
+use Method::Frame::Meta::FramedMethod::OptionalParameter;
+use Method::Frame::Meta::FramedMethod::ReturnType;
 
 use Class::Accessor::Lite (
     ro => [qw( name params return_type code )],
@@ -32,17 +32,17 @@ sub create_params {
     my ($class, $params) = @_;
     if (
         Scalar::Util::blessed($params) &&
-        $params->isa('Method::Frame::Meta::Method::Parameters')
+        $params->isa('Method::Frame::Meta::FramedMethod::Parameters')
     ) {
         $params;
     }
     elsif ( ref $params eq 'ARRAY' ) {
         my @params_objects = map { $class->create_param($_) } @$params;
-        Method::Frame::Meta::Method::ListParameters->new(\@params_objects);
+        Method::Frame::Meta::FramedMethod::ListParameters->new(\@params_objects);
     }
     elsif ( ref $params eq 'HASH' ) {
         my %params_objects = map { $_ => $class->create_param($params->{$_}) } keys %$params;
-        Method::Frame::Meta::Method::HashParameters->new(\%params_objects);
+        Method::Frame::Meta::FramedMethod::HashParameters->new(\%params_objects);
     }
     else {
         Carp::confess 'Invalid parameters option passed.';
@@ -53,24 +53,24 @@ sub create_param {
     my ($class, $param) = @_;
     if (
         Scalar::Util::blessed($param) && 
-        $param->isa('Method::Frame::Meta::Method::Parameter')
+        $param->isa('Method::Frame::Meta::FramedMethod::Parameter')
     ) {
         $param;
     }
     elsif ( !(defined Method::Frame::Util::ensure_type_constraint_object($param) ) ) {
-        Method::Frame::Meta::Method::RequiredParameter->new($param);
+        Method::Frame::Meta::FramedMethod::RequiredParameter->new($param);
     }
     elsif ( ref $param eq 'HASH' ) {
         my $err = Method::Frame::Util::ensure_type_constraint_object($param->{isa});
         Carp::confess $err if defined $err;
         if ( exists $param->{optional} ) {
-            Method::Frame::Meta::Method::OptionalParameter->new($param->{isa});
+            Method::Frame::Meta::FramedMethod::OptionalParameter->new($param->{isa});
         }
         elsif ( exists $param->{default} ) {
-            Method::Frame::Meta::Method::OptionalParameter->new($param->{isa}, $param->{default});
+            Method::Frame::Meta::FramedMethod::OptionalParameter->new($param->{isa}, $param->{default});
         }
         else {
-            Method::Frame::Meta::Method::RequiredParameter->new($param->{isa});
+            Method::Frame::Meta::FramedMethod::RequiredParameter->new($param->{isa});
         }
     }
     else {
@@ -82,12 +82,12 @@ sub create_return_type {
     my ($class, $constraint) = @_;
     if (
         Scalar::Util::blessed($constraint) &&
-        $constraint->isa('Method::Frame::Meta::Method::ReturnType')
+        $constraint->isa('Method::Frame::Meta::FramedMethod::ReturnType')
     ) {
         $constraint;
     }
     else {
-        Method::Frame::Meta::Method::ReturnType->new($constraint);
+        Method::Frame::Meta::FramedMethod::ReturnType->new($constraint);
     }
 }
 

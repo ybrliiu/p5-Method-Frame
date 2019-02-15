@@ -1,28 +1,28 @@
 use Method::Frame::Base qw( test );
 
-use Method::Frame::Meta::Method::OptionalParameter;
+use Method::Frame::Meta::FramedMethod::OptionalParameter;
 use Types::Standard qw( Int Maybe );
 
 subtest new => sub {
 
     ok dies {
-        Method::Frame::Meta::Method::OptionalParameter->new();
+        Method::Frame::Meta::FramedMethod::OptionalParameter->new();
     }, 'No arguments';
 
     ok dies {
-        Method::Frame::Meta::Method::OptionalParameter->new('string');
+        Method::Frame::Meta::FramedMethod::OptionalParameter->new('string');
     }, 'Pass not type constraint object';
 
     ok dies {
-        Method::Frame::Meta::Method::OptionalParameter->new('string', 0);
+        Method::Frame::Meta::FramedMethod::OptionalParameter->new('string', 0);
     }, 'Pass not type constraint object and default value';
 
     ok lives {
-        Method::Frame::Meta::Method::OptionalParameter->new(Int);
+        Method::Frame::Meta::FramedMethod::OptionalParameter->new(Int);
     }, 'Pass type constraint object';
 
     ok lives {
-        Method::Frame::Meta::Method::OptionalParameter->new(Int, 0);
+        Method::Frame::Meta::FramedMethod::OptionalParameter->new(Int, 0);
     }, 'Pass type constraint object and default value';
 
 };
@@ -31,7 +31,7 @@ subtest validate => sub {
 
     subtest 'Parameter has default value' => sub {
 
-        my $param = Method::Frame::Meta::Method::OptionalParameter->new(Int, 0);
+        my $param = Method::Frame::Meta::FramedMethod::OptionalParameter->new(Int, 0);
 
         {
             my ($valid_arg, $err) = $param->validate(100);
@@ -57,7 +57,7 @@ subtest validate => sub {
 
         # Optional parameter's type is SomeType or Undef,
         # so We should be pass type constraint Maybe[`a] when make optional parameter.
-        my $param = Method::Frame::Meta::Method::OptionalParameter->new(Maybe[Int]);
+        my $param = Method::Frame::Meta::FramedMethod::OptionalParameter->new(Maybe[Int]);
 
         {
             my ($valid_arg, $err) = $param->validate(100);
@@ -81,7 +81,7 @@ subtest validate => sub {
 
     subtest 'Optional parameter (when type constraint is not Maybe[`a])' => sub {
 
-        my $param = Method::Frame::Meta::Method::OptionalParameter->new(Int);
+        my $param = Method::Frame::Meta::FramedMethod::OptionalParameter->new(Int);
 
         {
             my ($valid_arg, $err) = $param->validate(100);

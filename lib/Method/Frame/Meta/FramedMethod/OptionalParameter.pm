@@ -1,8 +1,8 @@
-package Method::Frame::Meta::Method::OptionalParameter;
+package Method::Frame::Meta::FramedMethod::OptionalParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Meta::Method::Parameter';
+use parent 'Method::Frame::Meta::FramedMethod::Parameter';
 
 use Class::Accessor::Lite (
   ro => [qw( maybe_default )],

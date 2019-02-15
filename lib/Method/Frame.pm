@@ -7,7 +7,7 @@ our @EXPORT = qw( method );
 
 use Carp ();
 use Sub::Install ();
-use Method::Frame::Meta::Method;
+use Method::Frame::Meta::FramedMethod;
 
 sub method {
     my ($name, %args) = @_;
@@ -16,7 +16,7 @@ sub method {
         Carp::croak "Missing parameter '$arg_name'" unless $args{$arg_name};
     }
 
-    my $meta_method = Method::Frame::Meta::Method->new(
+    my $meta_method = Method::Frame::Meta::FramedMethod->new(
         name        => $name,
         return_type => $args{isa},
         params      => $args{params},
