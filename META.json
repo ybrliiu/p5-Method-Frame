@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Check method parameters type and return type.",
    "author" : [
       "mp0liiu <raian@reeshome.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "Method::Frame",
+   "name" : "Method-Frame",
    "no_index" : {
       "directory" : [
          "t",
@@ -33,26 +33,46 @@
       },
       "develop" : {
          "requires" : {
+            "Data::Validator" : "0",
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion::Fast" : "0.04",
             "Test::PAUSE::Permissions" : "0.04",
+            "Test::Perl::Critic" : "0",
             "Test::Pod" : "1.41",
-            "Test::Spellunker" : "v0.2.7"
+            "Test::Spellunker" : "v0.2.7",
+            "perl" : "v5.28.0"
          }
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008001"
+            "Class::Accessor::Lite" : "0.08",
+            "Import::Base" : "1.004",
+            "Scalar::Util" : "1.50",
+            "Sub::Install" : "0.928",
+            "perl" : "5.014000"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "Test2::V0" : "0",
+            "Test::More" : "0.98",
+            "Types::Standard" : "0"
          }
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/ybrliiu/p5-Method-Frame/issues"
+      },
+      "homepage" : "https://github.com/ybrliiu/p5-Method-Frame",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/ybrliiu/p5-Method-Frame.git",
+         "web" : "https://github.com/ybrliiu/p5-Method-Frame"
+      }
+   },
+   "version" : "v0.0.1",
    "x_serialization_backend" : "JSON::PP version 2.97001",
    "x_static_install" : 1
 }

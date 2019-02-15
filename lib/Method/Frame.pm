@@ -36,9 +36,11 @@ __END__
 
 =head1 NAME
 
-Method::Frame - It's new $module
+Method::Frame - Check method parameters type and return type.
 
 =head1 SYNOPSIS
+
+    use Method::Frame;
 
     package Math {
 

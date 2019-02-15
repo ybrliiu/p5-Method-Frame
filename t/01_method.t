@@ -31,7 +31,7 @@ subtest 'all parameters type and return type is matched' => sub {
 
 subtest 'parameter mismatch' => sub {
     ok(my $e = dies { Math->add("string", "string") });
-    my $err_mes = quotemeta q{0Th Parameter does not pass type constraint 'Int' because : Argument value is 'string'.)};
+    my $err_mes = quotemeta q{0Th Parameter does not pass type constraint 'Int' because : Argument value is 'string'.};
     like $e, qr!^${err_mes}!;
 };
 
