@@ -3,9 +3,7 @@ verbose = [%p]\n    %m at %f line %l, column %c. (Severity: %s)\n\n
 include = Subroutines::ProhibitAmpersandSigils Modules::RequireFilenameMatchesPackage
 
 [Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict]
-severity = 4
 equivalent_modules = Method::Frame::Base
 
 [Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings]
-severity = 4
 equivalent_modules = Method::Frame::Base
