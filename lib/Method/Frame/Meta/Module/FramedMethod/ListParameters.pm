@@ -1,10 +1,10 @@
-package Method::Frame::Meta::FramedMethod::ListParameters;
+package Method::Frame::Meta::Module::FramedMethod::ListParameters;
 
 use Method::Frame::Base;
 
 use Carp ();
 
-use parent 'Method::Frame::Meta::FramedMethod::Parameters';
+use parent 'Method::Frame::Meta::Module::FramedMethod::Parameters';
 
 use Class::Accessor::Lite (
     ro => [qw( list )],

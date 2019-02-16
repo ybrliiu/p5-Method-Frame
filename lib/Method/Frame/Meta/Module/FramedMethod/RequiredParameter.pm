@@ -1,14 +1,11 @@
-package Method::Frame::Meta::FramedMethod::ReturnType;
+package Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
 
 use Method::Frame::Base;
 
-use Carp ();
-use Scalar::Util ();
-use Method::Frame::Util;
+use parent 'Method::Frame::Meta::Module::FramedMethod::Parameter';
 
-use Class::Accessor::Lite (
-    ro => [qw( constraint )],
-);
+use Carp ();
+use Method::Frame::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -22,11 +19,10 @@ sub new {
 
 sub validate {
     Carp::croak 'Too few arguments' if @_ < 2;
-    my ($self, $return_value) = @_;
-    my $constraint = $self->constraint;
-    $constraint->check($return_value)
-        ? undef
-        : qq{Return type does not pass type constraint '$constraint' because : Method code returns '$return_value')};
+    my ($self, $argument) = @_;
+    $self->constraint->check($argument)
+        ? ( $argument, undef )
+        : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.} );
 }
 
 1;
