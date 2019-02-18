@@ -10,6 +10,8 @@ use Class::Accessor::Lite (
     ro => [qw( list )],
 );
 
+sub type { 'list' }
+
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
@@ -38,6 +40,11 @@ sub validate {
         }
     } 0 .. $self->num - 1;
     ( \@valid_args, undef );
+}
+
+sub check_diff {
+    my ($self, $parameters) = @_;
+    my $errors = $self->SUPER::check_diff($parameters);
 }
 
 1;

@@ -10,6 +10,8 @@ use Class::Accessor::Lite (
     ro => [qw( hash )],
 );
 
+sub type { 'hash' }
+
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $hash) = @_;
@@ -38,5 +40,11 @@ sub validate {
     } @param_names;
     ( \@valid_args, undef );
 }
+
+sub check_diff {
+    my ($self, $parameters) = @_;
+    my $errors = $self->SUPER::check_diff($parameters);
+}
+
 
 1;

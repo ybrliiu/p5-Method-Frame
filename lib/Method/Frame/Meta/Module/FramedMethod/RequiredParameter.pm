@@ -25,4 +25,15 @@ sub validate {
         : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.} );
 }
 
+sub compare {
+    my ($self, $param) = @_;
+    Carp::croak 'Argument must be MetaParameter object.'
+        unless $param->isa('Method::Frame::Meta::Module::FramedMethod::Parameter');
+
+    for my $maybe_err ( $self->compare_type($param), $self->compare_constraint($param) ) {
+        return $maybe_err if defined $maybe_err;
+    }
+    undef;
+}
+
 1;

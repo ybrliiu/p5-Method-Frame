@@ -2,11 +2,22 @@ package Method::Frame::Meta::Module;
 
 use Method::Frame::Base;
 
+use Class::Accessor::Lite (
+    new => 0,
+    ro  => [qw( name applied_role_names framed_methods )],
+);
+
 use Carp ();
 
-sub new { Carp::croak 'This is abstract method.' }
+sub new {
+    my ($class, %args) = @_;
+    Carp::croak q{Missing argument 'name'} unless defined $args{name};
+    $args{applied_role_names} //= [];
 
-sub add_method { Carp::croak 'This is abstract method.' }
+    bless \%args, $class;
+}
+
+sub add_framed_method { Carp::croak 'This is abstract method.' }
 
 sub consume_role { Carp::croak 'This is abstract method.' }
 
