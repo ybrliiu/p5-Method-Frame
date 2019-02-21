@@ -1,7 +1,7 @@
 use Method::Frame::Base qw( test );
 
-use Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
 use Types::Standard qw( Int );
+use Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
 
 subtest new => sub {
 
