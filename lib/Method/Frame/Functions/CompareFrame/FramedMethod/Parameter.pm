@@ -12,20 +12,20 @@ use Class::Accessor::Lite (
 
 sub new { Carp::croak 'This is abstract method.' }
 
-sub type { Carp::croak 'This is abstract method.' }
-
 sub compare { Carp::croak 'This is abstract method.' }
 
-sub compare_type {
+sub _type { Carp::croak 'This is abstract method.' }
+
+sub _compare_type {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
 
-    $self->type eq $param->type
+    $self->_type eq $param->_type
         ? undef
-        : "MetaParameter type is different. (@{[ $self->type ]} vs @{[ $param->type ]})";
+        : "MetaParameter type is different. (@{[ $self->_type ]} vs @{[ $param->_type ]})";
 }
 
-sub compare_constraint {
+sub _compare_constraint {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
 

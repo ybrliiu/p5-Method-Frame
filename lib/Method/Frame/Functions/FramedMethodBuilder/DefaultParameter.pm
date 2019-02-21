@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameter';
 
 use Class::Accessor::Lite (
-  ro => [qw( default )],
+    ro => [qw( default )],
 );
 
 use Carp ();

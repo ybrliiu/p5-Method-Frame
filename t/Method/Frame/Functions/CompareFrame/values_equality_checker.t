@@ -86,6 +86,9 @@ subtest value_equals => sub {
         0,
         CanEqualityString->new( value => 'str' ),
     );
+    ok scalar_equals(undef, undef);
+    ok !scalar_equals(undef, 0);
+    ok !scalar_equals(0, undef);
     ok value_equals(0.35, 0.35);
     ok !value_equals('pop', 0.35);
     ok !value_equals('@@@', \100);
