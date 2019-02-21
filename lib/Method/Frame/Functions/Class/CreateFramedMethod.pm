@@ -1,16 +1,16 @@
-package Method::Frame::Meta::Module::FramedMethod;
+package Method::Frame::Functions::Class::CreateFramedMethod;
 
 use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
-use Method::Frame::Meta::Module::FramedMethod::ListParameters;
-use Method::Frame::Meta::Module::FramedMethod::HashParameters;
-use Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
-use Method::Frame::Meta::Module::FramedMethod::DefaultParameter;
-use Method::Frame::Meta::Module::FramedMethod::OptionalParameter;
-use Method::Frame::Meta::Module::FramedMethod::ReturnType;
+use Method::Frame::Functions::Class::CreateFramedMethod::ListParameters;
+use Method::Frame::Functions::Class::CreateFramedMethod::HashParameters;
+use Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter;
+use Method::Frame::Functions::Class::CreateFramedMethod::DefaultParameter;
+use Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter;
+use Method::Frame::Functions::Class::CreateFramedMethod::ReturnType;
 
 use Class::Accessor::Lite (
     new => 0,
@@ -35,17 +35,17 @@ sub create_params {
     my ($class, $params) = @_;
     if (
         Scalar::Util::blessed($params) &&
-        $params->isa('Method::Frame::Meta::Module::FramedMethod::Parameters')
+        $params->isa('Method::Frame::Functions::Class::CreateFramedMethod::Parameters')
     ) {
         $params;
     }
     elsif ( ref $params eq 'ARRAY' ) {
         my @params_objects = map { $class->create_param($_) } @$params;
-        Method::Frame::Meta::Module::FramedMethod::ListParameters->new(\@params_objects);
+        Method::Frame::Functions::Class::CreateFramedMethod::ListParameters->new(\@params_objects);
     }
     elsif ( ref $params eq 'HASH' ) {
         my %params_objects = map { $_ => $class->create_param($params->{$_}) } keys %$params;
-        Method::Frame::Meta::Module::FramedMethod::HashParameters->new(\%params_objects);
+        Method::Frame::Functions::Class::CreateFramedMethod::HashParameters->new(\%params_objects);
     }
     else {
         Carp::confess 'Invalid parameters option passed.';
@@ -56,25 +56,25 @@ sub create_param {
     my ($class, $param) = @_;
     if (
         Scalar::Util::blessed($param) && 
-        $param->isa('Method::Frame::Meta::Module::FramedMethod::Parameter')
+        $param->isa('Method::Frame::Functions::Class::CreateFramedMethod::Parameter')
     ) {
         $param;
     }
     elsif ( !(defined Method::Frame::Util::ensure_type_constraint_object($param) ) ) {
-        Method::Frame::Meta::Module::FramedMethod::RequiredParameter->new($param);
+        Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new($param);
     }
     elsif ( ref $param eq 'HASH' ) {
         my $err = Method::Frame::Util::ensure_type_constraint_object($param->{isa});
         Carp::confess $err if defined $err;
         if ( exists $param->{default} ) {
-            Method::Frame::Meta::Module::FramedMethod::DefaultParameter
+            Method::Frame::Functions::Class::CreateFramedMethod::DefaultParameter
                 ->new( $param->{isa}, $param->{default} );
         }
         elsif ( !!$param->{optional} ) {
-            Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new($param->{isa});
+            Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter->new($param->{isa});
         }
         else {
-            Method::Frame::Meta::Module::FramedMethod::RequiredParameter->new($param->{isa});
+            Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new($param->{isa});
         }
     }
     else {
@@ -86,12 +86,12 @@ sub create_return_type {
     my ($class, $constraint) = @_;
     if (
         Scalar::Util::blessed($constraint) &&
-        $constraint->isa('Method::Frame::Meta::Module::FramedMethod::ReturnType')
+        $constraint->isa('Method::Frame::Functions::Class::CreateFramedMethod::ReturnType')
     ) {
         $constraint;
     }
     else {
-        Method::Frame::Meta::Module::FramedMethod::ReturnType->new($constraint);
+        Method::Frame::Functions::Class::CreateFramedMethod::ReturnType->new($constraint);
     }
 }
 

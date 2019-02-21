@@ -1,4 +1,4 @@
-package Method::Frame::Meta::Module::FramedMethod::ReturnType;
+package Method::Frame::Functions::Class::CreateFramedMethod::ReturnType;
 
 use Method::Frame::Base;
 

@@ -1,8 +1,8 @@
-package Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
+package Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Meta::Module::FramedMethod::Parameter';
+use parent 'Method::Frame::Functions::Class::CreateFramedMethod::Parameter';
 
 use Carp ();
 use Method::Frame::Util;

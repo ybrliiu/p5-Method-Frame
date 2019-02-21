@@ -1,0 +1,13 @@
+-pbp     # Start with Perl Best Practices
+-w       # Show all warnings
+-iob     # Ignore old breakpoints
+-l=80    # 80 characters per line
+-mbl=4   # No more than 4 blank lines
+-i=4     # Indentation is 4 columns
+-ci=4    # Continuation indentation is 4 columns
+-vt=0    # Less vertical tightness
+-pt=4    # High parenthesis tightness
+-bt=4    # High brace tightness
+-sbt=4   # High square bracket tightness
+-wn      # Weld nested containers
+-isbc    # Don't indent comments without leading space

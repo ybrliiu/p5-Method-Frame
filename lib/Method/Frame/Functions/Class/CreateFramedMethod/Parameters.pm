@@ -1,4 +1,4 @@
-package Method::Frame::Meta::Module::FramedMethod::Parameters;
+package Method::Frame::Functions::Class::CreateFramedMethod::Parameters;
 
 use Method::Frame::Base;
 

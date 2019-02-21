@@ -1,22 +1,22 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Maybe );
-use Method::Frame::Meta::Module::FramedMethod::OptionalParameter;
+use Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter;
 
 subtest new => sub {
 
     ok dies {
-        Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new();
+        Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter->new();
     }, 'Too few arguments';
 
     ok dies {
-        Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new(Int);
+        Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter->new(Int);
     }, 'Optional value does not pass type constraint.';
 
     ok lives {
         # Optional parameter's type is SomeType or Undef,
         # so We should be pass type constraint Maybe[`a] when make optional parameter.
-        Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new(Maybe[Int]);
+        Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter->new(Maybe[Int]);
     }, 'Pass type constraint object and default value';
     diag $@;
 
@@ -24,7 +24,7 @@ subtest new => sub {
 
 subtest validate => sub {
 
-    my $param = Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new(Maybe[Int]);
+    my $param = Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter->new(Maybe[Int]);
 
     {
         my ($valid_arg, $err) = $param->validate(100);
