@@ -29,12 +29,11 @@ sub new {
 }
 
 sub validate {
-    Carp::croak 'Too few arguments' if @_ < 2;
     my ($self, $maybe_argument) = @_;
     my $argument = $maybe_argument // $self->default;
     $self->constraint->check($argument)
         ? ( $argument, undef )
-        : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.} );
+        : ( undef, $self->_failed_message($argument) );
 }
 
 1;
