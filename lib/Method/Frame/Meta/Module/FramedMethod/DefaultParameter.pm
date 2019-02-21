@@ -1,25 +1,37 @@
-package Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
+package Method::Frame::Meta::Module::FramedMethod::DefaultParameter;
 
 use Method::Frame::Base;
 
 use parent 'Method::Frame::Meta::Module::FramedMethod::Parameter';
 
+use Class::Accessor::Lite (
+  ro => [qw( default )],
+);
+
 use Carp ();
+use Scalar::Util ();
 use Method::Frame::Util;
 
 sub new {
-    Carp::croak 'Too few arguments' if @_ < 2;
-    my ($class, $constraint) = @_;
+    Carp::croak 'Too few arguments' if @_ < 3;
+    my ($class, $constraint, $default) = @_;
 
     my $err = Method::Frame::Util::ensure_type_constraint_object($constraint);
     Carp::croak $err if defined $err;
 
-    bless +{ constraint => $constraint }, $class;
+    Carp::croak 'Default value does not pass type constraint.'
+        unless $constraint->check($default);
+
+    bless +{
+        constraint => $constraint,
+        default    => $default,
+    }, $class;
 }
 
 sub validate {
     Carp::croak 'Too few arguments' if @_ < 2;
-    my ($self, $argument) = @_;
+    my ($self, $maybe_argument) = @_;
+    my $argument = $maybe_argument // $self->default;
     $self->constraint->check($argument)
         ? ( $argument, undef )
         : ( undef, qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' because : Argument value is '$argument'.} );

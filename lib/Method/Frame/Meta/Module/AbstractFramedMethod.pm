@@ -8,6 +8,7 @@ use Method::Frame::Util;
 use Method::Frame::Meta::Module::FramedMethod::ListParameters;
 use Method::Frame::Meta::Module::FramedMethod::HashParameters;
 use Method::Frame::Meta::Module::FramedMethod::RequiredParameter;
+use Method::Frame::Meta::Module::FramedMethod::DefaultParameter;
 use Method::Frame::Meta::Module::FramedMethod::OptionalParameter;
 use Method::Frame::Meta::Module::FramedMethod::ReturnType;
 
@@ -64,11 +65,12 @@ sub create_param {
     elsif ( ref $param eq 'HASH' ) {
         my $err = Method::Frame::Util::ensure_type_constraint_object($param->{isa});
         Carp::confess $err if defined $err;
-        if ( exists $param->{optional} ) {
-            Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new($param->{isa});
+        if ( exists $param->{default} ) {
+            Method::Frame::Meta::Module::FramedMethod::DefaultParameter
+                ->new( $param->{isa}, $param->{default} );
         }
-        elsif ( exists $param->{default} ) {
-            Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new($param->{isa}, $param->{default});
+        elsif ( !!$param->{optional} ) {
+            Method::Frame::Meta::Module::FramedMethod::OptionalParameter->new($param->{isa});
         }
         else {
             Method::Frame::Meta::Module::FramedMethod::RequiredParameter->new($param->{isa});
