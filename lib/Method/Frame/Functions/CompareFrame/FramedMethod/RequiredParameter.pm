@@ -20,7 +20,7 @@ sub new {
 sub compare {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.'
-        unless $param->isa('Method::Frame::Functions::Class::CreateFramedMethod::Parameter');
+        unless $param->isa('Method::Frame::Functions::FramedMethodBuilder::Parameter');
 
     for my $maybe_err ( $self->compare_type($param), $self->compare_constraint($param) ) {
         return $maybe_err if defined $maybe_err;

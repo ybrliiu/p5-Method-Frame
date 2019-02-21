@@ -1,10 +1,10 @@
-package Method::Frame::Functions::Class::CreateFramedMethod::HashParameters;
+package Method::Frame::Functions::FramedMethodBuilder::HashParameters;
 
 use Method::Frame::Base;
 
 use Carp ();
 
-use parent 'Method::Frame::Functions::Class::CreateFramedMethod::Parameters';
+use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameters';
 
 use Class::Accessor::Lite (
     ro => [qw( hash )],

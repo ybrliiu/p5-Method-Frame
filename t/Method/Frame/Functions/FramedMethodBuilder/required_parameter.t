@@ -1,27 +1,27 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int );
-use Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter;
+use Method::Frame::Functions::FramedMethodBuilder::RequiredParameter;
 
 subtest new => sub {
 
     ok dies {
-        Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new();
+        Method::Frame::Functions::FramedMethodBuilder::RequiredParameter->new();
     }, 'No arguments';
 
     ok dies {
-        Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new('string')
+        Method::Frame::Functions::FramedMethodBuilder::RequiredParameter->new('string')
     }, 'Pass not type constraint object';
 
     ok lives {
-        Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new(Int);
+        Method::Frame::Functions::FramedMethodBuilder::RequiredParameter->new(Int);
     }, 'Pass type constraint object';
 
 };
 
 subtest validate => sub {
     
-    my $param = Method::Frame::Functions::Class::CreateFramedMethod::RequiredParameter->new(Int);
+    my $param = Method::Frame::Functions::FramedMethodBuilder::RequiredParameter->new(Int);
 
     {
         my ($valid_arg, $err) = $param->validate(100);

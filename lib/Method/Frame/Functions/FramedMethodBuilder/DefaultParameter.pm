@@ -1,8 +1,8 @@
-package Method::Frame::Functions::Class::CreateFramedMethod::DefaultParameter;
+package Method::Frame::Functions::FramedMethodBuilder::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::Class::CreateFramedMethod::Parameter';
+use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameter';
 
 use Class::Accessor::Lite (
   ro => [qw( default )],

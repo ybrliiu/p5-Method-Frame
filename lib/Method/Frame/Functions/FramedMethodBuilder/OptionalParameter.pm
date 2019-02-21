@@ -1,8 +1,8 @@
-package Method::Frame::Functions::Class::CreateFramedMethod::OptionalParameter;
+package Method::Frame::Functions::FramedMethodBuilder::OptionalParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::Class::CreateFramedMethod::DefaultParameter';
+use parent 'Method::Frame::Functions::FramedMethodBuilder::DefaultParameter';
 
 use Carp ();
 
