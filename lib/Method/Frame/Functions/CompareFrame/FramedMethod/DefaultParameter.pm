@@ -10,6 +10,7 @@ use Class::Accessor::Lite (
 
 use Carp ();
 use Scalar::Util ();
+use Data::Dumper ();
 use Method::Frame::Util;
 use Method::Frame::Functions::CompareFrame::FramedMethod::ValuesEqualityChecker qw( value_equals );
 
@@ -38,9 +39,17 @@ sub new {
 # override
 sub _type { 'default' }
 
+sub _dumper {
+    my $default = shift;
+    my $dumper = Data::Dumper->new([$default]);
+    $dumper->Terse(1)->Indent(0);
+    $dumper->Dump($default);
+}
+
 sub _different_default_message {
     my ($class, $self_default, $param_default) = @_;
-    "default value is different. (${self_default} vs ${param_default})";
+
+    "default value is different. (@{[ _dumper($self_default) ]} vs @{[ _dumper($param_default) ]})";
 }
 
 sub _compare_default {
