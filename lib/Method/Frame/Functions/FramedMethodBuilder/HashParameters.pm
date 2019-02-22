@@ -7,17 +7,20 @@ use Carp ();
 use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameters';
 
 use Class::Accessor::Lite (
-    ro => [qw( hash )],
+    new => 0,
+    ro  => [qw( hash )],
 );
 
-sub type { 'hash' }
-
+# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $hash) = @_;
+    Carp::croak 'Argument is not HashRef.' if !ref $hash ne 'HASH';
+
     bless +{ hash => $hash }, $class;
 }
 
+# override
 sub validate {
     my $self = shift;
     my $args = ref $_[0] eq 'HASH' ? shift : +{@_};
@@ -28,23 +31,17 @@ sub validate {
             unless exists $args->{$param_name};
     }
 
+    my %meta_params_map = %{ $self->hash };
     my @valid_args = map {
-        my ($param, $argument)     = ($self->hash->{$_}, $args->{$_});
-        my ($valid_argument, $err) = $param->validate($argument);
+        my ($valid_arg, $err) = $meta_params_map{$_}->validate($args->{$_});
         if ( defined $err ) {
             return ( undef, "Argument '$_' $err" );
         }
         else {
-            ( $_ => $valid_argument );
+            ( $_ => $valid_arg );
         }
     } @param_names;
     ( \@valid_args, undef );
 }
-
-sub check_diff {
-    my ($self, $parameters) = @_;
-    my $errors = $self->SUPER::check_diff($parameters);
-}
-
 
 1;

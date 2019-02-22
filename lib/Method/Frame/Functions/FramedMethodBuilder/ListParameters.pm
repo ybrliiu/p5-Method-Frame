@@ -7,44 +7,41 @@ use Carp ();
 use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameters';
 
 use Class::Accessor::Lite (
-    ro => [qw( list )],
+    new => 0,
+    ro  => [qw( list num )],
 );
 
-sub type { 'list' }
-
+# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
-    bless +{ list => $list }, $class;
+    Carp::croak 'Argument is not ArrayRef.' if !ref $list ne 'ARRAY';
+
+    bless +{
+        list => $list,
+        num  => scalar @$list,
+    }, $class;
 }
 
-sub num {
-    my $self = shift;
-    $self->{num} //= scalar @{ $self->list };
-}
-
+# override
 sub validate {
     my ($self, @args) = @_;
 
-    return ( undef, 'Too few args' ) if scalar @args < $self->num;
-    return ( undef, 'Too many args' ) if scalar @args > $self->num;
+    my $num = $self->num;
+    return ( undef, 'Too few args' ) if scalar @args < $num;
+    return ( undef, 'Too many args' ) if scalar @args > $num;
 
+    my @meta_params = @{ $self->list };
     my @valid_args = map {
-        my ($meta, $param)      = ($self->list->[$_], $args[$_]);
-        my ($valid_param, $err) = $meta->validate($param);
+        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_]);
         if ( defined $err ) {
             return ( undef, "${_}Th $err" );
         }
         else {
-            $valid_param;
+            $valid_arg;
         }
-    } 0 .. $self->num - 1;
+    } 0 .. $num - 1;
     ( \@valid_args, undef );
-}
-
-sub check_diff {
-    my ($self, $parameters) = @_;
-    my $errors = $self->SUPER::check_diff($parameters);
 }
 
 1;
