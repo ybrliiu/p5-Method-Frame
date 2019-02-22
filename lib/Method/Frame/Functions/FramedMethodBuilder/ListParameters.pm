@@ -3,6 +3,8 @@ package Method::Frame::Functions::FramedMethodBuilder::ListParameters;
 use Method::Frame::Base;
 
 use Carp ();
+use Type::Utils ();
+use Types::Standard ();
 
 use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameters';
 
@@ -15,7 +17,13 @@ use Class::Accessor::Lite (
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
-    Carp::croak 'Argument is not ArrayRef.' if !ref $list eq 'ARRAY';
+    {
+        state $constraint = do {
+            my $class_name = 'Method::Frame::Functions::FramedMethodBuilder::Parameter';
+            Types::Standard::ArrayRef([ Type::Utils::class_type($class_name) ]);
+        };
+        Carp::croak $constraint->get_message($list) unless $constraint->check($list);
+    }
 
     bless +{
         list => $list,
