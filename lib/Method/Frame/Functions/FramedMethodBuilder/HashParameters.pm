@@ -15,7 +15,7 @@ use Class::Accessor::Lite (
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $hash) = @_;
-    Carp::croak 'Argument is not HashRef.' if !ref $hash ne 'HASH';
+    Carp::croak 'Argument is not HashRef.' if !ref $hash eq 'HASH';
 
     bless +{ hash => $hash }, $class;
 }

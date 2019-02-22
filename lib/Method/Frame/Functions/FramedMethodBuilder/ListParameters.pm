@@ -15,7 +15,7 @@ use Class::Accessor::Lite (
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
-    Carp::croak 'Argument is not ArrayRef.' if !ref $list ne 'ARRAY';
+    Carp::croak 'Argument is not ArrayRef.' if !ref $list eq 'ARRAY';
 
     bless +{
         list => $list,
