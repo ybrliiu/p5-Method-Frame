@@ -1,7 +1,6 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str );
-use Type::Utils qw( class_type );
 use Method::Frame::Functions::CompareFrame::FramedMethod::ListParameters;
 use Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
 
@@ -43,8 +42,8 @@ subtest compare => sub {
         ]);
         my $errors = $params->compare($diff_params);
         is $errors, [
-            "0Th parameter constraint is different. (Int vs Str)",
-            "1Th parameter constraint is different. (Int vs Str)"
+            q{0Th parameter constraint is different. (Int vs Str)},
+            q{1Th parameter constraint is different. (Int vs Str)}
         ];
     };
 
