@@ -13,7 +13,7 @@ subtest compare => sub {
 
     my $meta_param3 = RequiredParameter->new(Str);
     ok( my $err = $meta_param->compare($meta_param3) );
-    is $err, q{Parameter's constraint is different. (Int vs Str)};
+    is $err, q{constraint is different. (Int vs Str)};
 };
 
 done_testing;

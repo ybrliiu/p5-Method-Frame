@@ -40,8 +40,7 @@ sub _type { 'default' }
 
 sub _different_default_message {
     my ($class, $self_default, $param_default) = @_;
-    q{MetaParameter's default value is different.}
-        . qq{(${self_default} vs ${param_default})};
+    "default value is different. (${self_default} vs ${param_default})";
 }
 
 sub _compare_default {

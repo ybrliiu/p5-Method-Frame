@@ -56,7 +56,7 @@ subtest compare_default => sub {
         ok !defined $meta_param->_compare_default($same_meta_param);
         my $diff_meta_param = DefaultParameter->new(Int, 999);
         ok( my $err = $meta_param->_compare_default($diff_meta_param) );
-        is $err, q{Parameter's default value is different. (0 vs 999)};
+        is $err, q{default value is different. (0 vs 999)};
     };
 
     subtest object => sub {
@@ -65,7 +65,7 @@ subtest compare_default => sub {
         ok !defined $meta_param->_compare_default($same_meta_param);
         my $diff_meta_param = DefaultParameter->new( class_type('String'), String->new('fuga') );
         ok( my $err = $meta_param->_compare_default($diff_meta_param) );
-        my $mes = quotemeta q{Parameter's default value is different. (};
+        my $mes = quotemeta q{default value is different. (};
         like $err, qr{^$mes};
     };
 
@@ -79,7 +79,7 @@ subtest compare => sub {
         ok !defined $meta_param->compare($same_meta_param);
         my $diff_meta_param = DefaultParameter->new(Int, 999);
         ok( my $err = $meta_param->compare($diff_meta_param) );
-        is $err, q{Parameter's default value is different. (0 vs 999)};
+        is $err, q{default value is different. (0 vs 999)};
     };
 
     subtest object => sub {
@@ -88,7 +88,7 @@ subtest compare => sub {
         ok !defined $meta_param->compare($same_meta_param);
         my $diff_meta_param = DefaultParameter->new( class_type('String'), String->new('fuga') );
         ok( my $err = $meta_param->compare($diff_meta_param) );
-        my $mes = quotemeta q{Parameter's default value is different. (};
+        my $mes = quotemeta q{default value is different. (};
         like $err, qr{^$mes};
     };
 

@@ -16,27 +16,24 @@ sub _type { Carp::croak 'This is abstract method.' }
 
 sub _compare_type {
     my ($self, $param) = @_;
-    Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
 
     $self->_type eq $param->_type
         ? undef
-        : "MetaParameter type is different. (@{[ $self->_type ]} vs @{[ $param->_type ]})";
+        : "type is different. (@{[ $self->_type ]} parameter vs @{[ $param->_type ]} parameter)";
 }
 
 sub _compare_constraint {
     my ($self, $param) = @_;
-    Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
 
     $self->constraint->equals( $param->constraint )
         ? undef
-        : 'MetaParameter constraint is different. '
+        : q{constraint is different. }
             . "(@{[ $self->constraint->name ]} vs @{[ $param->constraint->name ]})";
 }
 
 sub compare {
     my ($self, $param) = @_;
-    Carp::croak 'Argument must be MetaParameter object.'
-        unless $param->isa('Method::Frame::Functions::CompareFrame::FramedMethod::Parameter');
+    Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
 
     for my $maybe_err (
         $self->_compare_type($param),
