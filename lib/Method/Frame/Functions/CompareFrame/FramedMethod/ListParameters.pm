@@ -14,6 +14,9 @@ use Class::Accessor::Lite (
 );
 
 # override
+sub _type { 'list' }
+
+# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
@@ -34,7 +37,7 @@ sub new {
 sub _compare_num {
     my ($self, $params) = @_;
 
-    $self->num != $params->num
+    $self->num == $params->num
         ? undef
         : qq{Number of Parameters is different. (@{[ $self->num ]} vs @{[ $params->num ]})};
 }
