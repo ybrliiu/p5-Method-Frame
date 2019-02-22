@@ -68,12 +68,11 @@ Method::Frame - Check method parameters type and return type.
     }
 
     use Test2::V0;
-    my $sum;
-    lives_ok { $sum = Math->add(1, 2) };
-    is $sum, 3;
-    dies_ok { Math->add("string", "") };
 
-    dies_ok { Math->minus(5, 3) };
+    ok lives { Math->add(1, 2) };
+    is Math->add(1, 2), 3;
+    ok dies { Math->add("string", "") };
+    ok dies { Math->minus(5, 3) };
 
 
 =head1 DESCRIPTION
