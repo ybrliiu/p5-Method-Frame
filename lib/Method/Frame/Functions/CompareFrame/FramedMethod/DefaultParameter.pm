@@ -13,6 +13,7 @@ use Scalar::Util ();
 use Method::Frame::Util;
 use Method::Frame::Functions::CompareFrame::FramedMethod::ValuesEqualityChecker qw( value_equals );
 
+# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 3;
     my ($class, $constraint, $default) = @_;
@@ -24,7 +25,7 @@ sub new {
         unless $constraint->check($default);
 
     if ( Scalar::Util::blessed($default) ) {
-        Carp::croak q{Default value object can not call 'equals' method.'}
+        Carp::croak q{Default value object can not call 'equals' method.}
             unless $default->can('equals');
     }
 
@@ -34,6 +35,7 @@ sub new {
     }, $class;
 }
 
+# override
 sub _type { 'default' }
 
 sub _different_default_message {
@@ -46,15 +48,19 @@ sub _compare_default {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaDefaultParameter object.' unless $param->isa(ref $self);
 
+    # assert _compare_type
+    # assert _compare_constraint
+
     value_equals($self->default, $param->default)
         ? undef
         : $self->_different_default_message($self->default, $param->default);
 }
 
+# override
 sub compare {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.'
-        unless $param->isa('Method::Frame::Functions::FramedMethodBuilder::Parameter');
+        unless $param->isa('Method::Frame::Functions::CompareFrame::FramedMethod::Parameter');
 
     for my $maybe_err (
         $self->SUPER::compare($param),
