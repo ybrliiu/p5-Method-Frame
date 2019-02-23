@@ -20,14 +20,25 @@ sub new {
     bless +{ constraint => $constraint }, $class;
 }
 
-sub compare {
+sub _compare_constraint {
     my ($self, $return_type) = @_;
-    Carp::croak 'Argument must be ReturnType object.' unless $return_type->isa(__PACKAGE__);
 
     $self->constraint->equals( $return_type->constraint )
         ? undef
         : q{constraint is different. }
             . "(@{[ $self->constraint->name ]} vs @{[ $return_type->constraint->name ]})";
+}
+
+sub compare {
+    my ($self, $return_type) = @_;
+    Carp::croak 'Argument must be ReturnType object.' unless $return_type->isa(__PACKAGE__);
+
+    if ( my $err = $self->_compare_constraint($return_type) ) {
+        [ $err ];
+    }
+    else {
+        [];
+    }
 }
 
 1;
