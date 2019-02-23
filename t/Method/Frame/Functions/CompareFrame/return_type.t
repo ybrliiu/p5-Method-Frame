@@ -11,7 +11,7 @@ subtest compare_constraint => sub {
     ok !defined $meta_param->_compare_constraint( ReturnType->new(Int) );
 
     ok( my $err = $meta_param->_compare_constraint( ReturnType->new(Str) ) );
-    is $err, q{constraint is different. (Int vs Str)};
+    is $err, q{ReturnType constraint is different. (Int vs Str)};
 };
 
 done_testing;
