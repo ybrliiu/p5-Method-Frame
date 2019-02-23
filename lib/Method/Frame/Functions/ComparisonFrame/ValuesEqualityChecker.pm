@@ -1,4 +1,4 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::ValuesEqualityChecker;
+package Method::Frame::Functions::ComparisonFrame::ValuesEqualityChecker;
 
 use Method::Frame::Base;
 

@@ -2,10 +2,10 @@ use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str Maybe );
 use Type::Utils qw( class_type );
-use Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter;
+use Method::Frame::Functions::ComparisonFrame::DefaultParameter;
 
 use constant DefaultParameter =>
-    'Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter';
+    'Method::Frame::Functions::ComparisonFrame::DefaultParameter';
 
 package String {
 

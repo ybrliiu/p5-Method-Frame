@@ -1,17 +1,17 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Maybe );
-use Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
-use Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter;
-use Method::Frame::Functions::CompareFrame::FramedMethod::OptionalParameter;
+use Method::Frame::Functions::ComparisonFrame::RequiredParameter;
+use Method::Frame::Functions::ComparisonFrame::DefaultParameter;
+use Method::Frame::Functions::ComparisonFrame::OptionalParameter;
 
 use constant +{
     RequiredParameter => 
-        'Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter',
+        'Method::Frame::Functions::ComparisonFrame::RequiredParameter',
     DefaultParameter => 
-        'Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter',
+        'Method::Frame::Functions::ComparisonFrame::DefaultParameter',
     OptionalParameter => 
-        'Method::Frame::Functions::CompareFrame::FramedMethod::OptionalParameter',
+        'Method::Frame::Functions::ComparisonFrame::OptionalParameter',
 };
 
 subtest compare_type => sub {

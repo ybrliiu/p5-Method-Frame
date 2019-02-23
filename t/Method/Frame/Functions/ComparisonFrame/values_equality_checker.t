@@ -1,6 +1,6 @@
 use Method::Frame::Base qw( test );
 
-use Method::Frame::Functions::CompareFrame::FramedMethod::ValuesEqualityChecker qw( :all );
+use Method::Frame::Functions::ComparisonFrame::ValuesEqualityChecker qw( :all );
 
 subtest scalar_equals => sub {
     ok scalar_equals(undef, undef);

@@ -1,10 +1,10 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str );
-use Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType;
+use Method::Frame::Functions::ComparisonFrame::ReturnType;
 
 use constant ReturnType =>
-    'Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType';
+    'Method::Frame::Functions::ComparisonFrame::ReturnType';
 
 subtest compare_constraint => sub {
     my $meta_param  = ReturnType->new(Int);

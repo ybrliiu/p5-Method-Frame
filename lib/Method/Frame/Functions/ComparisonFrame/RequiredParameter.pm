@@ -1,8 +1,8 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
+package Method::Frame::Functions::ComparisonFrame::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::CompareFrame::FramedMethod::Parameter';
+use parent 'Method::Frame::Functions::ComparisonFrame::Parameter';
 
 use Carp ();
 use Method::Frame::Util;

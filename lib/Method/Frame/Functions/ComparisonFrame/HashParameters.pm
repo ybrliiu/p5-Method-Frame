@@ -1,4 +1,4 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::HashParameters;
+package Method::Frame::Functions::ComparisonFrame::HashParameters;
 
 use Method::Frame::Base;
 
@@ -6,7 +6,7 @@ use Carp ();
 use Type::Utils ();
 use Types::Standard ();
 
-use parent 'Method::Frame::Functions::CompareFrame::FramedMethod::Parameters';
+use parent 'Method::Frame::Functions::ComparisonFrame::Parameters';
 
 use Class::Accessor::Lite (
     new => 0,
@@ -22,7 +22,7 @@ sub new {
     my ($class, $hash) = @_;
     {
         state $constraint = do {
-            my $class_name = 'Method::Frame::Functions::CompareFrame::FramedMethod::Parameter';
+            my $class_name = 'Method::Frame::Functions::ComparisonFrame::Parameter';
             Types::Standard::HashRef([ Type::Utils::class_type($class_name) ]);
         };
         Carp::croak $constraint->get_message($hash) unless $constraint->check($hash);

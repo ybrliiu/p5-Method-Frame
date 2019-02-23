@@ -1,4 +1,4 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType;
+package Method::Frame::Functions::ComparisonFrame::ReturnType;
 
 use Method::Frame::Base;
 

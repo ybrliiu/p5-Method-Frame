@@ -1,4 +1,4 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::Parameter;
+package Method::Frame::Functions::ComparisonFrame::Parameter;
 
 use Method::Frame::Base;
 

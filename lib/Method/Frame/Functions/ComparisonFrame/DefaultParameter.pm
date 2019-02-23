@@ -1,8 +1,8 @@
-package Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter;
+package Method::Frame::Functions::ComparisonFrame::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::CompareFrame::FramedMethod::Parameter';
+use parent 'Method::Frame::Functions::ComparisonFrame::Parameter';
 
 use Class::Accessor::Lite (
     ro => [qw( default )],
@@ -12,7 +12,7 @@ use Carp ();
 use Scalar::Util ();
 use Data::Dumper ();
 use Method::Frame::Util;
-use Method::Frame::Functions::CompareFrame::FramedMethod::ValuesEqualityChecker qw( value_equals );
+use Method::Frame::Functions::ComparisonFrame::ValuesEqualityChecker qw( value_equals );
 
 # override
 sub new {
@@ -68,7 +68,7 @@ sub _compare_default {
 sub compare {
     my ($self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.'
-        unless $param->isa('Method::Frame::Functions::CompareFrame::FramedMethod::Parameter');
+        unless $param->isa('Method::Frame::Functions::ComparisonFrame::Parameter');
 
     for my $maybe_err (
         $self->SUPER::compare($param),

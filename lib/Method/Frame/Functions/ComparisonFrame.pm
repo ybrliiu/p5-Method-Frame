@@ -1,16 +1,16 @@
-package Method::Frame::Functions::CompareFrame::Frame;
+package Method::Frame::Functions::ComparisonFrame;
 
 use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
-use Method::Frame::Functions::CompareFrame::FramedMethod::ListParameters;
-use Method::Frame::Functions::CompareFrame::FramedMethod::HashParameters;
-use Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
-use Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter;
-use Method::Frame::Functions::CompareFrame::FramedMethod::OptionalParameter;
-use Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType;
+use Method::Frame::Functions::ComparisonFrame::ListParameters;
+use Method::Frame::Functions::ComparisonFrame::HashParameters;
+use Method::Frame::Functions::ComparisonFrame::RequiredParameter;
+use Method::Frame::Functions::ComparisonFrame::DefaultParameter;
+use Method::Frame::Functions::ComparisonFrame::OptionalParameter;
+use Method::Frame::Functions::ComparisonFrame::ReturnType;
 
 use Class::Accessor::Lite (
     new => 0,
@@ -34,17 +34,17 @@ sub create_params {
     my ($class, $params) = @_;
     if (
         Scalar::Util::blessed($params) &&
-        $params->isa('Method::Frame::Functions::CompareFrame::FramedMethod::Parameters')
+        $params->isa('Method::Frame::Functions::ComparisonFrame::Parameters')
     ) {
         $params;
     }
     elsif ( ref $params eq 'ARRAY' ) {
         my @params_objects = map { $class->create_param($_) } @$params;
-        Method::Frame::Functions::CompareFrame::FramedMethod::ListParameters->new(\@params_objects);
+        Method::Frame::Functions::ComparisonFrame::ListParameters->new(\@params_objects);
     }
     elsif ( ref $params eq 'HASH' ) {
         my %params_objects = map { $_ => $class->create_param($params->{$_}) } keys %$params;
-        Method::Frame::Functions::CompareFrame::FramedMethod::HashParameters->new(\%params_objects);
+        Method::Frame::Functions::ComparisonFrame::HashParameters->new(\%params_objects);
     }
     else {
         Carp::confess 'Invalid parameters option passed.';
@@ -55,25 +55,25 @@ sub create_param {
     my ($class, $param) = @_;
     if (
         Scalar::Util::blessed($param) && 
-        $param->isa('Method::Frame::Functions::CompareFrame::FramedMethod::Parameter')
+        $param->isa('Method::Frame::Functions::ComparisonFrame::Parameter')
     ) {
         $param;
     }
     elsif ( !(defined Method::Frame::Util::ensure_type_constraint_object($param) ) ) {
-        Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter->new($param);
+        Method::Frame::Functions::ComparisonFrame::RequiredParameter->new($param);
     }
     elsif ( ref $param eq 'HASH' ) {
         my $err = Method::Frame::Util::ensure_type_constraint_object($param->{isa});
         Carp::confess $err if defined $err;
         if ( exists $param->{default} ) {
-            Method::Frame::Functions::CompareFrame::FramedMethod::DefaultParameter
+            Method::Frame::Functions::ComparisonFrame::DefaultParameter
                 ->new( $param->{isa}, $param->{default} );
         }
         elsif ( !!$param->{optional} ) {
-            Method::Frame::Functions::CompareFrame::FramedMethod::OptionalParameter->new($param->{isa});
+            Method::Frame::Functions::ComparisonFrame::OptionalParameter->new($param->{isa});
         }
         else {
-            Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter->new($param->{isa});
+            Method::Frame::Functions::ComparisonFrame::RequiredParameter->new($param->{isa});
         }
     }
     else {
@@ -85,12 +85,12 @@ sub create_return_type {
     my ($class, $constraint) = @_;
     if (
         Scalar::Util::blessed($constraint) &&
-        $constraint->isa('Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType')
+        $constraint->isa('Method::Frame::Functions::ComparisonFrame::ReturnType')
     ) {
         $constraint;
     }
     else {
-        Method::Frame::Functions::CompareFrame::FramedMethod::ReturnType->new($constraint);
+        Method::Frame::Functions::ComparisonFrame::ReturnType->new($constraint);
     }
 }
 

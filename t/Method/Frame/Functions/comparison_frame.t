@@ -1,10 +1,10 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str );
-use Method::Frame::Functions::CompareFrame::Frame;
+use Method::Frame::Functions::ComparisonFrame;
 
 # alias
-use constant Frame => 'Method::Frame::Functions::CompareFrame::Frame';
+use constant Frame => 'Method::Frame::Functions::ComparisonFrame';
 
 subtest compare => sub {
 

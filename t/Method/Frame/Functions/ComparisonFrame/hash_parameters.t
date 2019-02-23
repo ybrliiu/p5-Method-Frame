@@ -1,14 +1,14 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str );
-use Method::Frame::Functions::CompareFrame::FramedMethod::HashParameters;
-use Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
+use Method::Frame::Functions::ComparisonFrame::HashParameters;
+use Method::Frame::Functions::ComparisonFrame::RequiredParameter;
 
 use constant +{
     HashParameters => 
-        'Method::Frame::Functions::CompareFrame::FramedMethod::HashParameters',
+        'Method::Frame::Functions::ComparisonFrame::HashParameters',
     RequiredParameter => 
-        'Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter',
+        'Method::Frame::Functions::ComparisonFrame::RequiredParameter',
 };
 
 subtest compare => sub {

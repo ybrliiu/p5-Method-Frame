@@ -1,10 +1,10 @@
 use Method::Frame::Base qw( test );
 
 use Types::Standard qw( Int Str );
-use Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter;
+use Method::Frame::Functions::ComparisonFrame::RequiredParameter;
 
 use constant RequiredParameter =>
-    'Method::Frame::Functions::CompareFrame::FramedMethod::RequiredParameter';
+    'Method::Frame::Functions::ComparisonFrame::RequiredParameter';
 
 subtest compare => sub {
     my $meta_param  = RequiredParameter->new(Int);
