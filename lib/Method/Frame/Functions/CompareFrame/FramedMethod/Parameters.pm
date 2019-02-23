@@ -23,10 +23,11 @@ sub compare {
     my ($self, $params) = @_;
 
     if ( my $err = $self->_compare_type($params) ) {
-        return [ $err ];
+        [ $err ];
     }
-
-    $self->_compare_each_parameters($params);
+    else {
+        $self->_compare_each_parameters($params);
+    }
 }
 
 1;
