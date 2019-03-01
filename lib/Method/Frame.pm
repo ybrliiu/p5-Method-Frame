@@ -6,8 +6,7 @@ use Exporter qw( import );
 our @EXPORT = qw( method );
 
 use Carp ();
-use Sub::Install ();
-use Method::Frame::Functions::FramedMethodBuilder;
+use Method::Frame::Class;
 
 sub method {
     my ($name, %args) = @_;
@@ -16,17 +15,14 @@ sub method {
         Carp::croak "Missing parameter '$arg_name'" unless $args{$arg_name};
     }
 
-    my $meta_method = Method::Frame::Functions::FramedMethodBuilder->new(
+    my $maybe_err = Method::Frame::Class->add_framed_method(
+        (caller)[0],
         name        => $name,
         return_type => $args{isa},
         params      => $args{params},
         code        => $args{code},
     );
-    Sub::Install::install_sub({
-        code => $meta_method->build,
-        into => (caller)[0],
-        as   => $name,
-    });
+    Carp::croak $maybe_err if defined $maybe_err;
 }
 
 1;

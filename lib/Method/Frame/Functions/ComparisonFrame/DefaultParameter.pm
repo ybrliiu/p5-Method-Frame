@@ -5,7 +5,8 @@ use Method::Frame::Base;
 use parent 'Method::Frame::Functions::ComparisonFrame::Parameter';
 
 use Class::Accessor::Lite (
-    ro => [qw( default )],
+    new => 0,
+    ro  => [qw( default )],
 );
 
 use Carp ();
