@@ -6,9 +6,7 @@ use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
 
-use Class::Accessor::Lite (
-    ro => [qw( constraint )],
-);
+use parent 'Method::Frame::Functions::Interfaces::Frame::ReturnType';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;

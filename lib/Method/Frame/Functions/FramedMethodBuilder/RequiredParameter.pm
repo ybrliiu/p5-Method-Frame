@@ -2,7 +2,10 @@ package Method::Frame::Functions::FramedMethodBuilder::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameter';
+use parent qw(
+    Method::Frame::Functions::FramedMethodBuilder::Parameter
+    Method::Frame::Functions::Interfaces::Frame::RequiredParameter
+);
 
 use Carp ();
 use Method::Frame::Util;

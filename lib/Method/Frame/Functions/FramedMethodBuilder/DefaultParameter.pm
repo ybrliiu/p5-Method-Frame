@@ -2,10 +2,9 @@ package Method::Frame::Functions::FramedMethodBuilder::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::FramedMethodBuilder::Parameter';
-
-use Class::Accessor::Lite (
-    ro => [qw( default )],
+use parent qw(
+    Method::Frame::Functions::FramedMethodBuilder::Parameter
+    Method::Frame::Functions::Interfaces::Frame::DefaultParameter
 );
 
 use Carp ();

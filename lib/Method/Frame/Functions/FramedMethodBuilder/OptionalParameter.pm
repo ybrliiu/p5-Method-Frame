@@ -2,7 +2,10 @@ package Method::Frame::Functions::FramedMethodBuilder::OptionalParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::FramedMethodBuilder::DefaultParameter';
+use parent qw(
+    Method::Frame::Functions::FramedMethodBuilder::DefaultParameter
+    Method::Frame::Functions::Interfaces::Frame::OptionalParameter
+);
 
 use Carp ();
 
