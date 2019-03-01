@@ -6,11 +6,9 @@ use Carp ();
 use Type::Utils ();
 use Types::Standard ();
 
-use parent 'Method::Frame::Functions::ComparisonFrame::Parameters';
-
-use Class::Accessor::Lite (
-    new => 0,
-    ro  => [qw( hash )],
+use parent qw(
+    Method::Frame::Functions::ComparisonFrame::Parameters
+    Method::Frame::Functions::Interfaces::Frame::HashParameters
 );
 
 # override

@@ -5,10 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 
-use Class::Accessor::Lite (
-    new => 0,
-    ro  => [qw( constraint )],
-);
+use parent 'Method::Frame::Functions::Interfaces::Frame::Parameter';
 
 sub new { Carp::croak 'This is abstract method.' }
 

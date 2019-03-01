@@ -4,6 +4,8 @@ use Method::Frame::Base;
 
 use Carp ();
 
+use parent 'Method::Frame::Functions::Interfaces::Frame::Parameters';
+
 sub _type { Carp::croak 'This is abstract method.' }
 
 sub new { Carp::croak 'This is abstract method.' }

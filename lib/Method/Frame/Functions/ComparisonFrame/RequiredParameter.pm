@@ -2,7 +2,10 @@ package Method::Frame::Functions::ComparisonFrame::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::ComparisonFrame::Parameter';
+use parent qw(
+    Method::Frame::Functions::ComparisonFrame::Parameter
+    Method::Frame::Functions::Interfaces::Frame::RequiredParameter
+);
 
 use Carp ();
 use Method::Frame::Util;

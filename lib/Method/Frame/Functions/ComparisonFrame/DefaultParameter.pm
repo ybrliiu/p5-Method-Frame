@@ -2,11 +2,9 @@ package Method::Frame::Functions::ComparisonFrame::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::ComparisonFrame::Parameter';
-
-use Class::Accessor::Lite (
-    new => 0,
-    ro  => [qw( default )],
+use parent qw(
+    Method::Frame::Functions::ComparisonFrame::Parameter
+    Method::Frame::Functions::Interfaces::Frame::DefaultParameter
 );
 
 use Carp ();

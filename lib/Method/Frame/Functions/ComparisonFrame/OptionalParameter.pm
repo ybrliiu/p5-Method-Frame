@@ -2,9 +2,12 @@ package Method::Frame::Functions::ComparisonFrame::OptionalParameter;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::ComparisonFrame::DefaultParameter';
-
 use Carp ();
+
+use parent qw(
+    Method::Frame::Functions::ComparisonFrame::DefaultParameter
+    Method::Frame::Functions::Interfaces::Frame::OptionalParameter
+);
 
 # override
 sub new {
