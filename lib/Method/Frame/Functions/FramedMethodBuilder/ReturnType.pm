@@ -5,6 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
+use Method::Frame::Functions::ComparisonFrame::ReturnType;
 
 use parent 'Method::Frame::Functions::Interfaces::Frame::ReturnType';
 
@@ -19,12 +20,16 @@ sub new {
 }
 
 sub validate {
-    Carp::croak 'Too few arguments' if @_ < 2;
     my ($self, $return_value) = @_;
     my $constraint = $self->constraint;
     $constraint->check($return_value)
         ? undef
         : qq{Return type does not pass type constraint '$constraint' because : Method code returns '$return_value')};
+}
+
+sub as_class_return_type {
+    my $self = shift;
+    Method::Frame::Functions::ComparisonFrame::ReturnType->new($self->constraint);
 }
 
 1;

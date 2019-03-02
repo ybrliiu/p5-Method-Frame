@@ -2,13 +2,14 @@ package Method::Frame::Functions::FramedMethodBuilder::RequiredParameter;
 
 use Method::Frame::Base;
 
+use Carp ();
+use Method::Frame::Util;
+use Method::Frame::Functions::ComparisonFrame::RequiredParameter;
+
 use parent qw(
     Method::Frame::Functions::FramedMethodBuilder::Parameter
     Method::Frame::Functions::Interfaces::Frame::RequiredParameter
 );
-
-use Carp ();
-use Method::Frame::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -25,6 +26,11 @@ sub validate {
     $self->constraint->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
+}
+
+sub as_class_parameter {
+    my $self = shift;
+    Method::Frame::Functions::ComparisonFrame::RequiredParameter->new($self->constraint);
 }
 
 1;

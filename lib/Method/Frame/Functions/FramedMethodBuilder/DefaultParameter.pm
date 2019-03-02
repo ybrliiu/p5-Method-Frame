@@ -2,14 +2,15 @@ package Method::Frame::Functions::FramedMethodBuilder::DefaultParameter;
 
 use Method::Frame::Base;
 
+use Carp ();
+use Scalar::Util ();
+use Method::Frame::Util;
+use Method::Frame::Functions::ComparisonFrame::DefaultParameter;
+
 use parent qw(
     Method::Frame::Functions::FramedMethodBuilder::Parameter
     Method::Frame::Functions::Interfaces::Frame::DefaultParameter
 );
-
-use Carp ();
-use Scalar::Util ();
-use Method::Frame::Util;
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 3;
@@ -33,6 +34,12 @@ sub validate {
     $self->constraint->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
+}
+
+sub as_class_parameter {
+    my $self = shift;
+    Method::Frame::Functions::ComparisonFrame::DefaultParameter
+        ->new($self->constraint, $self->default);
 }
 
 1;

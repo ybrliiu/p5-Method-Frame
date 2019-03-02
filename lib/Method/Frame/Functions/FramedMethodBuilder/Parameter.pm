@@ -17,4 +17,6 @@ sub _failed_message {
         . qq{because : Argument value is '$argument'.};
 }
 
+sub as_class_parameter { Carp::croak 'This is abstract method.' }
+
 1;

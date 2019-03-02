@@ -11,6 +11,7 @@ use Method::Frame::Functions::FramedMethodBuilder::RequiredParameter;
 use Method::Frame::Functions::FramedMethodBuilder::DefaultParameter;
 use Method::Frame::Functions::FramedMethodBuilder::OptionalParameter;
 use Method::Frame::Functions::FramedMethodBuilder::ReturnType;
+use Method::Frame::Functions::Class::FramedMethod;
 
 use parent 'Method::Frame::Functions::Interfaces::FramedMethod';
 
@@ -107,6 +108,16 @@ sub build {
         }
         $return_value;
     };
+}
+
+sub as_class_framed_method {
+    my $self = shift;
+    Method::Frame::Functions::Class::FramedMethod->new(
+        name        => $self->name,
+        params      => $self->params->as_class_parameters(),
+        return_type => $self->return_type->as_class_return_type(),
+        code        => $self->code,
+    );
 }
 
 1;

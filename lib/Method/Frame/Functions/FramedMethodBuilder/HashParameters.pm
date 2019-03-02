@@ -5,6 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Type::Utils ();
 use Types::Standard ();
+use Method::Frame::Functions::ComparisonFrame::HashParameters;
 
 use parent qw(
     Method::Frame::Functions::FramedMethodBuilder::Parameters
@@ -48,6 +49,12 @@ sub validate {
         }
     } @param_names;
     ( \@valid_args, undef );
+}
+
+sub as_class_parameters {
+    my $self = shift;
+    my %params = map { $_ => $self->hash->{$_}->as_class_parameter } keys %{ $self->hash };
+    Method::Frame::Functions::ComparisonFrame::HashParameters->new(\%params);
 }
 
 1;

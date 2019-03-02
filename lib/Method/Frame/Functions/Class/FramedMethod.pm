@@ -10,13 +10,11 @@ use parent qw(
 );
 
 sub new {
-    Carp::croak 'Too few arguments.' if @_ < 2;
-    my ($class, $framed_method) = @_;
-    Carp::croak 'Parameter does not FrameMethod object.'
-        unless $framed_method->isa('Method::Frame::Functions::Interfaces::FramedMethod');
+    my ($class, %args) = @_;
+    Carp::croak q{Argument 'code' is not CodeRef.} unless $args{code} ne 'CODE';
 
-    my $self = $class->SUPER::new(%$framed_method);
-    $self->{code} = $framed_method->code;
+    my $self = $class->SUPER::new(%args);
+    $self->{code} = $args{code};
     $self;
 }
 

@@ -5,6 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Type::Utils ();
 use Types::Standard ();
+use Method::Frame::Functions::ComparisonFrame::ListParameters;
 
 use parent qw(
     Method::Frame::Functions::FramedMethodBuilder::Parameters
@@ -48,6 +49,12 @@ sub validate {
         }
     } 0 .. $num - 1;
     ( \@valid_args, undef );
+}
+
+sub as_class_parameters {
+    my $self = shift;
+    my @params = map { $_->as_class_parameter() } @{ $self->list };
+    Method::Frame::Functions::ComparisonFrame::ListParameters->new(\@params);
 }
 
 1;

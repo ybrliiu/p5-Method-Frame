@@ -3,7 +3,6 @@ package Method::Frame::Functions::Class;
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Functions::Class::FramedMethod;
 use Method::Frame::Functions::Class::FramedMethods;
 use Method::Frame::Functions::SymbolTableOperator;
 
@@ -30,7 +29,7 @@ sub add_framed_method {
     Carp::croak 'Parameter does not FrameMethodBuilder object.'
         unless $framed_method_builder->isa('Method::Frame::Functions::FramedMethodBuilder');
 
-    my $framed_method = Method::Frame::Functions::Class::FramedMethod->new($framed_method_builder);
+    my $framed_method = $framed_method_builder->as_class_framed_method();
     if ( my $err = $self->framed_methods->add($framed_method) ) {
         $err;
     }
