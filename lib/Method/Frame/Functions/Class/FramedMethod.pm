@@ -2,29 +2,21 @@ package Method::Frame::Functions::Class::FramedMethod;
 
 use Method::Frame::Base;
 
-use parent 'Method::Frame::Functions::ComparisonFrame';
-
 use Carp ();
 
-use Class::Accessor::Lite (
-    new => 0,
-    ro  => [qw( code )],
+use parent qw(
+    Method::Frame::Functions::ComparisonFrame
+    Method::Frame::Functions::Interfaces::FramedMethod
 );
 
 sub new {
     Carp::croak 'Too few arguments.' if @_ < 2;
-    my ($class, $framed_method_builder) = @_;
-    Carp::croak 'Parameter does not FrameMethodBuilder object.'
-        unless $framed_method_builder->isa('Method::Frame::Functions::FramedMethodBuilder');
+    my ($class, $framed_method) = @_;
+    Carp::croak 'Parameter does not FrameMethod object.'
+        unless $framed_method->isa('Method::Frame::Functions::Interfaces::FramedMethod');
 
-    # やはり Builder -> FrameMethod への変換メソッドをきちんと実装する必要がありそう.
-=head1 
-- FrameMethod など共通のインターフェースを作る
-- FrameMethodBuilder -> FrameMethodInterface に変換
-- Class::FrameMethod は FrameMethodInterface から作成
-=cut
-    my $self = $class->SUPER::new( frame => $framed_method_builder );
-    $self->{code} = $framed_method_builder->code;
+    my $self = $class->SUPER::new(%$framed_method);
+    $self->{code} = $framed_method->code;
     $self;
 }
 
