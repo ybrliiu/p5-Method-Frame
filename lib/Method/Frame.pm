@@ -17,10 +17,12 @@ sub method {
 
     my $maybe_err = Method::Frame::Class->add_framed_method(
         (caller)[0],
-        name        => $name,
-        return_type => $args{isa},
-        params      => $args{params},
-        code        => $args{code},
+        +{
+            name        => $name,
+            return_type => $args{isa},
+            params      => $args{params},
+            code        => $args{code},
+        },
     );
     Carp::croak $maybe_err if defined $maybe_err;
 }
