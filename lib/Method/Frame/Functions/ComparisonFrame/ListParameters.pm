@@ -3,8 +3,10 @@ package Method::Frame::Functions::ComparisonFrame::ListParameters;
 use Method::Frame::Base;
 
 use Carp ();
+use Scalar::Util ();
 use Type::Utils ();
 use Types::Standard ();
+use Method::Frame::Functions::ComparisonFrame::Parameter;
 
 use parent qw(
     Method::Frame::Functions::ComparisonFrame::Parameters
@@ -19,6 +21,7 @@ sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
     {
+    
         state $constraint = do {
             my $class_name = 'Method::Frame::Functions::ComparisonFrame::Parameter';
             Types::Standard::ArrayRef([ Type::Utils::class_type($class_name) ]);

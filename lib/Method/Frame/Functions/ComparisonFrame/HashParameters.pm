@@ -3,6 +3,7 @@ package Method::Frame::Functions::ComparisonFrame::HashParameters;
 use Method::Frame::Base;
 
 use Carp ();
+use Scalar::Util ();
 use Type::Utils ();
 use Types::Standard ();
 

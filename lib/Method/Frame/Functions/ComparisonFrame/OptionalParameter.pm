@@ -3,6 +3,7 @@ package Method::Frame::Functions::ComparisonFrame::OptionalParameter;
 use Method::Frame::Base;
 
 use Carp ();
+use Scalar::Util ();
 
 use parent qw(
     Method::Frame::Functions::ComparisonFrame::DefaultParameter
@@ -12,7 +13,19 @@ use parent qw(
 # override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
-    my ($class, $constraint) = @_;
+    my $class = shift;
+    my $constraint = do {
+        if ( 
+            Scalar::Util::blessed($_[0]) &&
+            $_[0]->isa('Method::Frame::Functions::Interfaces::Frame::OptionalParameter')
+        ) {
+            $_[0]->constraint;
+        }
+        else {
+            $_[0];
+        }
+    };
+
     $class->SUPER::new($constraint, undef);
 }
 

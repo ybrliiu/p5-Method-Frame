@@ -15,8 +15,24 @@ use Method::Frame::Functions::ComparisonFrame::ValuesEqualityChecker qw( value_e
 
 # override
 sub new {
-    Carp::croak 'Too few arguments' if @_ < 3;
-    my ($class, $constraint, $default) = @_;
+    Carp::croak 'Too few arguments' if @_ < 2;
+    my $class = shift;
+    my ($constraint, $default) = do {
+        if ( @_ == 1 ) {
+            if ( 
+                Scalar::Util::blessed($_[0]) &&
+                $_[0]->isa('Method::Frame::Functions::Interfaces::Frame::DefaultParameter')
+            ) {
+                ( $_[0]->constraint, $_[0]->default );
+            }
+            else {
+                Carp::croak 'Argument is not DefaultParameter object.';
+            }
+        }
+        else {
+            @_;
+        }
+    };
 
     my $err = Method::Frame::Util::ensure_type_constraint_object($constraint);
     Carp::croak $err if defined $err;

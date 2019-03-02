@@ -23,11 +23,7 @@ sub new {
 - FrameMethodBuilder -> FrameMethodInterface に変換
 - Class::FrameMethod は FrameMethodInterface から作成
 =cut
-    my $self = $class->SUPER::new(
-        name        => $framed_method_builder->name,
-        return_type => $framed_method_builder->return_type,
-        params      => $framed_method_builder->params,
-    );
+    my $self = $class->SUPER::new( frame => $framed_method_builder );
     $self->{code} = $framed_method_builder->code;
     $self;
 }

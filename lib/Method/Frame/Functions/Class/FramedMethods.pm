@@ -7,8 +7,8 @@ use Type::Utils ();
 use Types::Standard ();
 
 use Class::Accessor::Lite (
-  new => 0,
-  ro => [qw( map )],
+    new => 0,
+    ro => [qw( map )],
 );
 
 sub new {
@@ -44,6 +44,7 @@ sub add {
     }
     else {
         $self->map->{$framed_method->name} = $framed_method;
+        undef;
     }
 }
 

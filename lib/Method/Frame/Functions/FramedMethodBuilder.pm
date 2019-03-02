@@ -12,10 +12,7 @@ use Method::Frame::Functions::FramedMethodBuilder::DefaultParameter;
 use Method::Frame::Functions::FramedMethodBuilder::OptionalParameter;
 use Method::Frame::Functions::FramedMethodBuilder::ReturnType;
 
-use Class::Accessor::Lite (
-    new => 0,
-    ro  => [qw( name params return_type code )],
-);
+use parent 'Method::Frame::Functions::Interfaces::FramedMethod';
 
 sub new {
     my ($class, %args) = @_;

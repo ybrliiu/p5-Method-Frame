@@ -20,7 +20,7 @@ sub new {
         name           => $args{name},
         framed_methods => Method::Frame::Functions::Class::FramedMethods->new([]),
         symbol_table_operator =>
-            Method::Frame::Functions::SymbolTableOperator->new(package_name => $args{name}),
+            Method::Frame::Functions::SymbolTableOperator->new($args{name}),
     }, $class;
 }
 
