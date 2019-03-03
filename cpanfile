@@ -2,7 +2,7 @@ requires 'perl', '5.014000';
 requires 'Class::Accessor::Lite', '0.08';
 requires 'Import::Base', '1.004';
 requires 'Scalar::Util', '1.50';
-requires 'Sub::Install', '0.928';
+requires 'Class::Load', '0.25';
 
 on configure => sub {
     requires 'Module::Build::Tiny', '0.035';
