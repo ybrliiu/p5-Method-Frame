@@ -57,6 +57,34 @@ sub new {
     }, $class;
 }
 
+sub add_framed_method {
+    Carp::croak 'Too few argument.' if @_ < 2;
+    my ($self, $framed_method) = @_;
+    {
+        my $is_framed_method = Method::Frame::Util::object_isa(
+            $framed_method,
+            'Method::Frame::Functions::Role::FramedMethod'
+        );
+        Carp::croak 'Argument is not FrameMethod object.' unless $is_framed_method;
+    }
+
+    $self->framed_methods->add($framed_method);
+}
+
+sub add_required_framed_method {
+    Carp::croak 'Too few argument.' if @_ < 2;
+    my ($self, $required_framed_method) = @_;
+    {
+        my $is_required_framed_method = Method::Frame::Util::object_isa(
+            $required_framed_method,
+            'Method::Frame::Functions::Role::RequiredFramedMethod'
+        );
+        Carp::croak 'Argument is not RequiredFramedMethod object.' unless $is_required_framed_method;
+    }
+
+    $self->required_framed_methods->add($required_framed_method);
+}
+
 # override
 sub consume_required_framed_methods {
     my ($self, $required_framed_methods) = @_;
