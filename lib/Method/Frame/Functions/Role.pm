@@ -69,13 +69,6 @@ sub consume_required_framed_methods {
     [ @$apply_errors, @$implemented_errors ];
 }
 
-sub are_required_framed_methods_implemented {
-    my ($self, $required_framed_methods) = @_;
-    my ($are_implemented, $errors) =
-        $required_framed_methods->are_implemented($self->framed_methods);
-    ($are_implemented, $errors);
-}
-
 # override
 sub consume_framed_methods {
     my ($self, $framed_methods) = @_;
