@@ -8,8 +8,8 @@ use Method::Frame::MetaRoleStore;
 use Method::Frame::Functions::Role;
 use Method::Frame::Functions::Role::FramedMethod;
 use Method::Frame::Functions::Role::RequiredFramedMethod;
-# use Method::Frame::Functions::Role::ParametersFactory;
-# use Method::Frame::Functions::Role::ReturnTypeFactory;
+use Method::Frame::Functions::Role::ParametersFactory;
+use Method::Frame::Functions::Role::ReturnTypeFactory;
 
 sub add_framed_method {
     my ($class, $role_name, $method_options) = @_;
