@@ -14,4 +14,10 @@ sub ensure_type_constraint_object {
     undef;
 }
 
+sub object_isa {
+    Carp::croak 'Too few arguments.' if @_ < 2;
+    my ($object, $class_name) = @_;
+    Scalar::Util::blessed($object) && $object->isa($class_name);
+}
+
 1;

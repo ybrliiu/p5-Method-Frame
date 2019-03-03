@@ -1,4 +1,4 @@
-package Method::Frame::Functions::Interfaces::AbstractFramedMethod;
+package Method::Frame::Functions::Interfaces::RequiredFramedMethod;
 
 use Method::Frame::Base;
 

@@ -28,11 +28,6 @@
 - Class::FrameMethod は ComparisonFrame を継承
 - Class::FrameMethod が FrameMethodBuilder と ComparisonFrame に依存している形にする
 
-## 将来の理想
-- FrameMethod など共通のインターフェースを作る
-- FrameMethodBuilder -> FrameMethodInterface に変換
-- Class::FrameMethod は FrameMethodInterface から作成
-
 # 方針
 - 既存のコードと組み合わせてもうまく動く
   - Mooseなどには依存しない

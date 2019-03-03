@@ -1,10 +1,4 @@
 # 予定
-- Functions::Class::AddFramedMethodの作成
-    - Framed Method builderに名前はいらないかもしれない?
-        - 今はreturn typeの不一致時のエラーにのみ使用している
-        - ほかのモジュールではどうしている? -> Function::Return ではエラーメッセージに使っていた
-        - 匿名メソッドなら? -> __ANON__ ?
-- MetaDataStoreの作成
 
 # Method::Frame 機能一覧
 - Frameの比較
