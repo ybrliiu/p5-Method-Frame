@@ -19,13 +19,8 @@ sub new {
     $self;
 }
 
-sub as_required_framed_method {
-    my $self = shift;
-    Method::Frame::Functions::Role::RequiredFramedMethod->new(
-        name        => $self->name,
-        params      => $self->params,
-        return_type => $self->return_type,
-    );
+sub as_hash_ref {
+    +{ %{ shift() } };
 }
 
 1;

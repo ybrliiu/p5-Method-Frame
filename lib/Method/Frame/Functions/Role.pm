@@ -5,6 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Util;
 use Method::Frame::Functions::Role::FramedMethods;
+use Method::Frame::Functions::Role::RequiredFramedMethod;
 use Method::Frame::Functions::Role::RequiredFramedMethods;
 
 use parent 'Method::Frame::Functions::Role::Applicable';
@@ -70,7 +71,6 @@ sub consume_required_framed_methods {
 
 sub are_required_framed_methods_implemented {
     my ($self, $required_framed_methods) = @_;
-    # 同じ名前のFrameがあったら等しいFrameかどうかをチェックする
     my ($are_implemented, $errors) =
         $required_framed_methods->are_implemented($self->framed_methods);
     ($are_implemented, $errors);
@@ -88,7 +88,8 @@ sub consume_framed_methods {
     my @errors = do {
         if ( @$collision_framed_methods > 0 ) {
             my @required_framed_methods =
-                map { $_->as_required_framed_method() } @$collision_framed_methods;
+                map { Method::Frame::Functions::Role::RequiredFramedMethod->new($_->as_hash_ref()) }
+                @$collision_framed_methods;
             my @add_errors =
                 grep { defined $_ }
                 map { $self->required_framed_methods->add($_) }
