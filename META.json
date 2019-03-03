@@ -46,9 +46,9 @@
       "runtime" : {
          "requires" : {
             "Class::Accessor::Lite" : "0.08",
+            "Class::Load" : "0.25",
             "Import::Base" : "1.004",
             "Scalar::Util" : "1.50",
-            "Sub::Install" : "0.928",
             "perl" : "5.014000"
          }
       },
