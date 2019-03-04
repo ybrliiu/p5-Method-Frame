@@ -1,6 +1,6 @@
 # 予定
-- Functions::Role::* 系のFactory作成
 - does, DOES のインストール
+- RoleからApplicableは別で分けるべきかも知れない・・・?
 - Roleのモジュールへの適用をどうするか
 
 # Method::Frame 機能一覧

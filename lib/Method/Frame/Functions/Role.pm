@@ -136,6 +136,12 @@ sub apply {
             $applicable->consume_framed_methods($self->framed_methods),
             $applicable->consume_required_framed_methods($self->required_framed_methods),
         );
+
+    if ( @errors == 0 ) {
+        $applicable->add_consumed_role_name($self->name);
+        $applicable->install_does();
+    }
+
     \@errors;
 }
 

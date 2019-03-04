@@ -24,6 +24,14 @@ sub has_subroutine {
     defined *{ $self->package_name . '::' . $name }{CODE};
 }
 
+sub maybe_get_subroutine {
+    Carp::croak 'Too few arguments' if @_ < 2;
+    my ($self, $name) = @_;
+
+    no strict 'refs'; ## no critic
+    *{ $self->package_name . '::' . $name }{CODE};
+}
+
 sub add_subroutine {
     Carp::croak 'Too few arguments' if @_ < 3;
     my ($self, $name, $code) = @_;
@@ -34,7 +42,7 @@ sub add_subroutine {
     }
     else {
         no strict 'refs'; ## no critic
-        *{$self->package_name . '::' . $name} = $code;
+        *{ $self->package_name . '::' . $name } = $code;
         undef;
     }
 }
