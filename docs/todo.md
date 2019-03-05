@@ -1,6 +1,9 @@
 # 予定
-- does, DOES のインストール
-- RoleからApplicableは別で分けるべきかも知れない・・・?
+- Class::Method:: 以下もちゃんと作る
+- 依存関係の整理
+- RoleからApplicableは別で分ける
+- RoleはRole関連の操作のみ
+- ApplicableはRoleを適用可能な状態のモジュールについての機能
 - Roleのモジュールへの適用をどうするか
 
 # Method::Frame 機能一覧
