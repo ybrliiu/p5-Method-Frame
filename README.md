@@ -42,6 +42,15 @@ Method::Frame - Check method parameters type and return type.
 
 Method::Frame is ...
 
+# CONCEPT
+
+- 普通のPerlのSyntaxでかける
+- Moose like な構文でかける
+- Mooxx 系のアクセサをよしなにしてくれるOOPフレームワークと組み合わせてもうまく動く
+- しかし Mooxx 系のどのモジュールには依存しない
+- コンパイル時にはチェックしない
+- 代わりに静的解析しやすくして、あとから静的に型チェックできるようにする
+
 # LICENSE
 
 Copyright (C) mp0liiu.
