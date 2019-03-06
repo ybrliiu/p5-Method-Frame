@@ -28,6 +28,8 @@ use constant +{
     ReturnType            => 'Method::Frame::Functions::ComparisonFrame::ReturnType',
 };
 
+$SIG{__DIE__} = \&Carp::confess;
+
 subtest apply => sub {
     my $meta_role  = Role->new(name => 'TestRole');
     my $applicable = Role->new(name => 'Taro');

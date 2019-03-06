@@ -138,8 +138,8 @@ sub apply {
         );
 
     if ( @errors == 0 ) {
-        $applicable->add_consumed_role_name($self->name);
-        $applicable->install_does();
+        # $applicable->add_consumed_role_name($self->name);
+        # $applicable->install_does();
     }
 
     \@errors;
