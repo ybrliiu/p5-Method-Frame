@@ -1,4 +1,4 @@
-package Method::Frame::Class;
+package Method::Frame::SugerBackEnd::Class;
 
 use Method::Frame::Base;
 

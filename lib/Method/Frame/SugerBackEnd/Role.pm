@@ -1,4 +1,4 @@
-package Method::Frame::Role;
+package Method::Frame::SugerBackEnd::Role;
 
 use Method::Frame::Base;
 
