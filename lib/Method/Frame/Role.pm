@@ -4,7 +4,7 @@ use Method::Frame::Base;
 
 use Carp ();
 use Class::Load ();
-use Method::Frame::MetaRoleStore;
+use Method::Frame::Store::MetaRoleStore;
 use Method::Frame::Functions::Role;
 use Method::Frame::Functions::Role::FramedMethod;
 use Method::Frame::Functions::Role::RequiredFramedMethod;
@@ -14,7 +14,7 @@ use Method::Frame::Functions::Role::RequiredFramedMethod;
 sub add_framed_method {
     my ($class, $role_name, $method_options) = @_;
 
-    my $meta_role = Method::Frame::MetaRoleStore->maybe_get($role_name)
+    my $meta_role = Method::Frame::Store::MetaRoleStore->maybe_get($role_name)
         // Method::Frame::Functions::Role->new(name => $role_name);
 
     my $framed_method = Method::Frame::Functions::Role::FramedMethod->new(
@@ -28,7 +28,7 @@ sub add_framed_method {
         $err;
     }
     else {
-        Method::Frame::MetaRoleStore->store($meta_role);
+        Method::Frame::Store::MetaRoleStore->store($meta_role);
         undef;
     }
 }
@@ -36,7 +36,7 @@ sub add_framed_method {
 sub add_required_framed_method {
     my ($class, $role_name, $method_options) = @_;
 
-    my $meta_role = Method::Frame::MetaRoleStore->maybe_get($role_name)
+    my $meta_role = Method::Frame::Store::MetaRoleStore->maybe_get($role_name)
         // Method::Frame::Functions::Role->new(name => $role_name);
 
     my $required_framed_method = Method::Frame::Functions::Role::RequiredFramedMethod->new(
@@ -49,7 +49,7 @@ sub add_required_framed_method {
         $err;
     }
     else {
-        Method::Frame::MetaRoleStore->store($meta_role);
+        Method::Frame::Store::MetaRoleStore->store($meta_role);
         undef;
     }
 }
@@ -64,10 +64,10 @@ sub consume_role {
     Class::Load::load_class($_) for @consume_roles_name;
 
     my @consume_roles = map {
-        Method::Frame::MetaRoleStore->maybe_get($_) // Carp::confess "MetaRole $_ does not exists."
+        Method::Frame::Store::MetaRoleStore->maybe_get($_) // Carp::confess "MetaRole $_ does not exists."
     } @consume_roles_name;
 
-    my $consumer = Method::Frame::MetaRoleStore->maybe_get($consumer_name)
+    my $consumer = Method::Frame::Store::MetaRoleStore->maybe_get($consumer_name)
         // Method::Frame::Functions::Role->new(name => $consumer_name);
 
     my @errors = map { @{ $_->apply($consumer) } } @consume_roles;

@@ -1,4 +1,4 @@
-package Method::Frame::MetaModuleStore;
+package Method::Frame::Store::MetaModuleStore;
 
 use Method::Frame::Base;
 

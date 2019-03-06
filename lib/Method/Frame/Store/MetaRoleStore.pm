@@ -1,4 +1,4 @@
-package Method::Frame::MetaRoleStore;
+package Method::Frame::Store::MetaRoleStore;
 
 use Method::Frame::Base;
 

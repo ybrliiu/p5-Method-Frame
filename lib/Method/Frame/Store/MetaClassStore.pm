@@ -1,4 +1,4 @@
-package Method::Frame::MetaClassStore;
+package Method::Frame::Store::MetaClassStore;
 
 use Method::Frame::Base;
 
