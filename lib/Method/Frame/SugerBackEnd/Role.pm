@@ -5,9 +5,9 @@ use Method::Frame::Base;
 use Carp ();
 use Class::Load ();
 use Method::Frame::Store::MetaRoleStore;
-use Method::Frame::Functions::Role;
-use Method::Frame::Functions::Role::FramedMethod;
-use Method::Frame::Functions::Role::RequiredFramedMethod;
+use Method::Frame::Domain::Role;
+use Method::Frame::Domain::Role::FramedMethod;
+use Method::Frame::Domain::Role::RequiredFramedMethod;
 # use Method::Frame::Functions::Role::ParametersFactory;
 # use Method::Frame::Functions::Role::ReturnTypeFactory;
 
@@ -15,9 +15,9 @@ sub add_framed_method {
     my ($class, $role_name, $method_options) = @_;
 
     my $meta_role = Method::Frame::Store::MetaRoleStore->maybe_get($role_name)
-        // Method::Frame::Functions::Role->new(name => $role_name);
+        // Method::Frame::Domain::Role->new(name => $role_name);
 
-    my $framed_method = Method::Frame::Functions::Role::FramedMethod->new(
+    my $framed_method = Method::Frame::Domain::Role::FramedMethod->new(
         name        => $method_options->{name},
         params      => ParametersFactory->create($method_options->{params}),
         return_type => ReturnTypeFactory->create($method_options->{return_type}),
@@ -37,9 +37,9 @@ sub add_required_framed_method {
     my ($class, $role_name, $method_options) = @_;
 
     my $meta_role = Method::Frame::Store::MetaRoleStore->maybe_get($role_name)
-        // Method::Frame::Functions::Role->new(name => $role_name);
+        // Method::Frame::Domain::Role->new(name => $role_name);
 
-    my $required_framed_method = Method::Frame::Functions::Role::RequiredFramedMethod->new(
+    my $required_framed_method = Method::Frame::Domain::Role::RequiredFramedMethod->new(
         name        => $method_options->{name},
         params      => ParametersFactory->create($method_options->{params}),
         return_type => ReturnTypeFactory->create($method_options->{return_type}),
@@ -68,7 +68,7 @@ sub consume_role {
     } @consume_roles_name;
 
     my $consumer = Method::Frame::Store::MetaRoleStore->maybe_get($consumer_name)
-        // Method::Frame::Functions::Role->new(name => $consumer_name);
+        // Method::Frame::Domain::Role->new(name => $consumer_name);
 
     my @errors = map { @{ $_->apply($consumer) } } @consume_roles;
     \@errors;

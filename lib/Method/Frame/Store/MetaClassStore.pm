@@ -16,7 +16,7 @@ sub store {
     Carp::croak 'Too few argument.' if @_ < 2;
     my ($class, $meta_class) = @_;
     Carp::croak 'Argument does not Method::Frame::Functions::Class object.'
-        unless $meta_class->isa('Method::Frame::Functions::Class');
+        unless $meta_class->isa('Method::Frame::Domain::Class');
 
     $STORE{ $meta_class->name } = $meta_class;
 }

@@ -4,24 +4,24 @@ use Method::Frame::Base;
 
 use Carp ();
 use Method::Frame::Store::MetaClassStore;
-use Method::Frame::Functions::Class;
-use Method::Frame::Functions::FramedMethodBuilder;
-use Method::Frame::Functions::FramedMethodBuilder::ParametersFactory;
-use Method::Frame::Functions::FramedMethodBuilder::ReturnTypeFactory;
+use Method::Frame::Domain::Class;
+use Method::Frame::Domain::FramedMethodBuilder;
+use Method::Frame::Domain::FramedMethodBuilder::ParametersFactory;
+use Method::Frame::Domain::FramedMethodBuilder::ReturnTypeFactory;
 
 # alias 
 use constant +{
-    ParametersFactory => 'Method::Frame::Functions::FramedMethodBuilder::ParametersFactory',
-    ReturnTypeFactory => 'Method::Frame::Functions::FramedMethodBuilder::ReturnTypeFactory',
+    ParametersFactory => 'Method::Frame::Domain::FramedMethodBuilder::ParametersFactory',
+    ReturnTypeFactory => 'Method::Frame::Domain::FramedMethodBuilder::ReturnTypeFactory',
 };
 
 sub add_framed_method {
     my ($class, $class_name, $method_options) = @_;
 
     my $meta_class = Method::Frame::Store::MetaClassStore->maybe_get($class_name)
-        // Method::Frame::Functions::Class->new(name => $class_name);
+        // Method::Frame::Domain::Class->new(name => $class_name);
 
-    my $builder = Method::Frame::Functions::FramedMethodBuilder->new(
+    my $builder = Method::Frame::Domain::FramedMethodBuilder->new(
         name        => $method_options->{name},
         params      => ParametersFactory->create($method_options->{params}),
         return_type => ReturnTypeFactory->create($method_options->{return_type}),
