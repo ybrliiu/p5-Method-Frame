@@ -1,4 +1,4 @@
-package Method::Frame::Domain::SymbolTableOperator;
+package Method::Frame::Domain::Module::SymbolTableOperator;
 
 use Method::Frame::Base;
 

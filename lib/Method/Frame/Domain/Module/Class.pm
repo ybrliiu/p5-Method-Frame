@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Util qw( object_isa );
 use Method::Frame::Domain::Module::Class::FramedMethods;
-use Method::Frame::Domain::SymbolTableOperator;
+use Method::Frame::Domain::Module::SymbolTableOperator;
 
 use Class::Accessor::Lite (
     new => 0,
@@ -35,13 +35,13 @@ sub new {
             if ( exists $args{symbol_table_operator} ) {
                 my $is_symbol_table_operator = object_isa(
                     $args{symbol_table_operator},
-                    'Method::Frame::Domain::SymbolTableOperator',
+                    'Method::Frame::Domain::Module::SymbolTableOperator',
                 );
                 Carp::croak "Argument 'symbol_table_operator' is not SymbolTableOperator object"
                     unless $is_symbol_table_operator;
             }
             else {
-                Method::Frame::Domain::SymbolTableOperator->new($args{name});
+                Method::Frame::Domain::Module::SymbolTableOperator->new($args{name});
             }
         },
     }, $class;
