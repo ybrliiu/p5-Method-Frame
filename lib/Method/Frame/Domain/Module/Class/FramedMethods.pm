@@ -1,4 +1,4 @@
-package Method::Frame::Domain::Class::FramedMethods;
+package Method::Frame::Domain::Module::Class::FramedMethods;
 
 use Method::Frame::Base;
 
@@ -16,7 +16,7 @@ sub new {
     my ($class, $framed_methods) = @_;
     {
         state $constraint = do {
-            my $class_name = 'Method::Frame::Domain::Class::FramedMethod';
+            my $class_name = 'Method::Frame::Domain::Module::Class::FramedMethod';
             Types::Standard::ArrayRef([Type::Utils::class_type($class_name)]);
         };
         Carp::croak $constraint->get_message($framed_methods)
@@ -29,7 +29,7 @@ sub new {
 sub has {
     my ($self, $framed_method) = @_;
     Carp::croak 'Parameter does not FrameMethod object.'
-        unless $framed_method->isa('Method::Frame::Domain::Class::FramedMethod');
+        unless $framed_method->isa('Method::Frame::Domain::Module::Class::FramedMethod');
 
     exists $self->map->{$framed_method->name};
 }
@@ -37,7 +37,7 @@ sub has {
 sub add {
     my ($self, $framed_method) = @_;
     Carp::croak 'Parameter does not FrameMethod object.'
-        unless $framed_method->isa('Method::Frame::Domain::Class::FramedMethod');
+        unless $framed_method->isa('Method::Frame::Domain::Module::Class::FramedMethod');
 
     if ( $self->has($framed_method) ) {
         "Framed method '@{[ $framed_method->name ]}' is already exists.";

@@ -3,7 +3,7 @@ package Method::Frame::Domain::FramedMethodBuilder;
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Domain::Class::FramedMethod;
+use Method::Frame::Domain::Module::Class::FramedMethod;
 
 use parent 'Method::Frame::Domain::Interfaces::FramedMethod';
 
@@ -46,7 +46,7 @@ sub build {
 
 sub as_class_framed_method {
     my $self = shift;
-    Method::Frame::Domain::Class::FramedMethod->new(
+    Method::Frame::Domain::Module::Class::FramedMethod->new(
         name        => $self->name,
         params      => $self->params->as_class_parameters(),
         return_type => $self->return_type->as_class_return_type(),

@@ -4,7 +4,7 @@ use Method::Frame::Base;
 
 use Carp ();
 use Method::Frame::Store::MetaClassStore;
-use Method::Frame::Domain::Class;
+use Method::Frame::Domain::Module::Class;
 use Method::Frame::Domain::FramedMethodBuilder;
 use Method::Frame::Domain::FramedMethodBuilder::ParametersFactory;
 use Method::Frame::Domain::FramedMethodBuilder::ReturnTypeFactory;
@@ -19,7 +19,7 @@ sub add_framed_method {
     my ($class, $class_name, $method_options) = @_;
 
     my $meta_class = Method::Frame::Store::MetaClassStore->maybe_get($class_name)
-        // Method::Frame::Domain::Class->new(name => $class_name);
+        // Method::Frame::Domain::Module::Class->new(name => $class_name);
 
     my $builder = Method::Frame::Domain::FramedMethodBuilder->new(
         name        => $method_options->{name},

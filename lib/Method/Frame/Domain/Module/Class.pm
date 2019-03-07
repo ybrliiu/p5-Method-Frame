@@ -1,9 +1,9 @@
-package Method::Frame::Domain::Class;
+package Method::Frame::Domain::Module::Class;
 
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Domain::Class::FramedMethods;
+use Method::Frame::Domain::Module::Class::FramedMethods;
 use Method::Frame::Domain::SymbolTableOperator;
 
 use Class::Accessor::Lite (
@@ -17,7 +17,7 @@ sub new {
 
     bless +{
         name           => $args{name},
-        framed_methods => Method::Frame::Domain::Class::FramedMethods->new([]),
+        framed_methods => Method::Frame::Domain::Module::Class::FramedMethods->new([]),
         symbol_table_operator =>
             Method::Frame::Domain::SymbolTableOperator->new($args{name}),
     }, $class;
