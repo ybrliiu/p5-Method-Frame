@@ -5,6 +5,9 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 
+use Exporter qw( import );
+our @EXPORT = qw( object_isa );
+
 sub ensure_type_constraint_object {
     my $constraint = shift;
     for my $required_method (qw[ name equals check get_message ]) {
