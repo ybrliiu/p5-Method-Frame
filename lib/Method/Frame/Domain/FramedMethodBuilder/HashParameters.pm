@@ -5,37 +5,34 @@ use Method::Frame::Base;
 use Carp ();
 use Type::Utils ();
 use Types::Standard ();
-use Method::Frame::Domain::ComparisonFrame::HashParameters;
+use Method::Frame::Domain::Module::Frame::HashParameters;
+use Role::Tiny::With qw( with );
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameters Method::Frame::Domain::Module::Frame::HashParameters);
+with 'Method::Frame::Domain::FramedMethodBuilder::Parameters';
 
-# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $hash) = @_;
-    {
-        state $constraint = do {
-            my $class_name = 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
-            Types::Standard::HashRef([ Type::Utils::class_type($class_name) ]);
-        };
-        Carp::croak $constraint->get_message($hash) unless $constraint->check($hash);
-    }
+    state $constraint = do {
+        my $role_name = 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
+        Types::Standard::HashRef([ Type::Utils::role_type($role_name) ]);
+    };
+    Carp::croak $constraint->get_message($hash) unless $constraint->check($hash);
 
     bless +{ hash => $hash }, $class;
 }
 
-# override
 sub validate {
     my $self = shift;
     my $args = ref $_[0] eq 'HASH' ? shift : +{@_};
 
-    my @param_names = keys %{ $self->hash };
+    my @param_names = keys %{ $self->{hash} };
     for my $param_name (@param_names) {
         return ( undef, "Argument '$param_name' does not exists." ) 
             unless exists $args->{$param_name};
     }
 
-    my %meta_params_map = %{ $self->hash };
+    my %meta_params_map = %{ $self->{hash} };
     my @valid_args = map {
         my ($valid_arg, $err) = $meta_params_map{$_}->validate($args->{$_});
         if ( defined $err ) {
@@ -48,10 +45,10 @@ sub validate {
     ( \@valid_args, undef );
 }
 
-sub as_class_parameters {
+sub as_module_parameters {
     my $self = shift;
-    my %params = map { $_ => $self->hash->{$_}->as_class_parameter } keys %{ $self->hash };
-    Method::Frame::Domain::ComparisonFrame::HashParameters->new(\%params);
+    my %params = map { $_ => $self->{hash}->{$_}->as_module_parameter } keys %{ $self->{hash} };
+    Method::Frame::Domain::Module::Frame::HashParameters->new(\%params);
 }
 
 1;

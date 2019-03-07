@@ -1,22 +1,18 @@
 package Method::Frame::Domain::FramedMethodBuilder::Parameter;
 
 use Method::Frame::Base;
+use Role::Tiny;
 
-use Carp ();
-use Scalar::Util ();
+requires 'new';
 
-use parent 'Method::Frame::Domain::Module::Frame::Parameter';
+requires 'validate';
 
-sub new { Carp::croak 'This is abstract method.' }
-
-sub validate { Carp::croak 'This is abstract method.' }
+requires 'as_module_parameter';
 
 sub _failed_message {
     my ($self, $argument) = @_;
-    qq{Parameter does not pass type constraint '@{[ $self->constraint ]}' }
+    qq{Parameter does not pass type constraint '$self->{constraint}' }
         . qq{because : Argument value is '$argument'.};
 }
-
-sub as_class_parameter { Carp::croak 'This is abstract method.' }
 
 1;

@@ -12,6 +12,7 @@ use Method::Frame::Domain::FramedMethodBuilder::ParameterFactory;
 use constant ParameterFactory => 'Method::Frame::Domain::FramedMethodBuilder::ParameterFactory';
 
 sub create {
+    Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $args) = @_;
 
     if ( ref $args eq 'ARRAY' ) {

@@ -5,9 +5,10 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
-use Method::Frame::Domain::ComparisonFrame::DefaultParameter;
+use Method::Frame::Domain::Module::Frame::DefaultParameter;
+use Role::Tiny::With qw( with );
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Module::Frame::DefaultParameter);
+with 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 3;
@@ -28,15 +29,15 @@ sub new {
 sub validate {
     my ($self, $maybe_argument) = @_;
     my $argument = $maybe_argument // $self->default;
-    $self->constraint->check($argument)
+    $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
 }
 
-sub as_class_parameter {
+sub as_module_parameter {
     my $self = shift;
-    Method::Frame::Domain::ComparisonFrame::DefaultParameter
-        ->new($self->constraint, $self->default);
+    Method::Frame::Domain::Module::Frame::DefaultParameter
+        ->new($self->{constraint}, $self->{default});
 }
 
 1;

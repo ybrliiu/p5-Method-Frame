@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use parent 'Method::Frame::Domain::Module::Frame::Parameter';
 
 use Class::Accessor::Lite (
-    new => 0,
+    new => 1,
     ro  => [qw( default )],
 );
 

@@ -9,6 +9,7 @@ use Method::Frame::Domain::FramedMethodBuilder::DefaultParameter;
 use Method::Frame::Domain::FramedMethodBuilder::OptionalParameter;
 
 sub create {
+    Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $arg) = @_;
 
     if ( !(defined Method::Frame::Util::ensure_type_constraint_object($arg) ) ) {
@@ -23,6 +24,7 @@ sub create {
 }
 
 sub create_from_hash_ref {
+    Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $args) = @_;
 
     my $err = Method::Frame::Util::ensure_type_constraint_object($args->{isa});

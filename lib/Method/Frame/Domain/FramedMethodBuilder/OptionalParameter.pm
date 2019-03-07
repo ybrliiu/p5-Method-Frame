@@ -3,9 +3,10 @@ package Method::Frame::Domain::FramedMethodBuilder::OptionalParameter;
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Domain::ComparisonFrame::OptionalParameter;
+use Method::Frame::Domain::Module::Frame::OptionalParameter;
+use Role::Tiny::With qw( with );
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::DefaultParameter Method::Frame::Domain::Module::Frame::OptionalParameter);
+use parent 'Method::Frame::Domain::FramedMethodBuilder::DefaultParameter';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -13,9 +14,9 @@ sub new {
     $class->SUPER::new($constraint, undef);
 }
 
-sub as_class_parameter {
+sub as_module_parameter {
     my $self = shift;
-    Method::Frame::Domain::ComparisonFrame::OptionalParameter->new($self->constraint);
+    Method::Frame::Domain::Module::Frame::OptionalParameter->new($self->{constraint});
 }
 
 1;

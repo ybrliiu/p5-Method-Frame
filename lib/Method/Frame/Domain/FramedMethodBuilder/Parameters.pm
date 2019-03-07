@@ -1,15 +1,12 @@
 package Method::Frame::Domain::FramedMethodBuilder::Parameters;
 
 use Method::Frame::Base;
+use Role::Tiny;
 
-use Carp ();
+requires 'new';
 
-use parent 'Method::Frame::Domain::Module::Frame::Parameters';
+requires 'validate';
 
-sub new { Carp::croak 'This is abstract method.' }
-
-sub validate { Carp::croak 'This is abstract method.' }
-
-sub as_class_parameters { Carp::croak 'This is abstract method.' }
+requires 'as_module_parameters';
 
 1;

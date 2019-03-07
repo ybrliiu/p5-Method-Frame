@@ -4,9 +4,10 @@ use Method::Frame::Base;
 
 use Carp ();
 use Method::Frame::Util;
-use Method::Frame::Domain::ComparisonFrame::RequiredParameter;
+use Method::Frame::Domain::Module::Frame::RequiredParameter;
+use Role::Tiny::With qw( with );
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Module::Frame::RequiredParameter);
+with 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -20,14 +21,14 @@ sub new {
 
 sub validate {
     my ($self, $argument) = @_;
-    $self->constraint->check($argument)
+    $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
 }
 
-sub as_class_parameter {
+sub as_module_parameter {
     my $self = shift;
-    Method::Frame::Domain::ComparisonFrame::RequiredParameter->new($self->constraint);
+    Method::Frame::Domain::Module::Frame::RequiredParameter->new($self->{constraint});
 }
 
 1;
