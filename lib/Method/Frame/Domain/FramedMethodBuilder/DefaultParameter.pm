@@ -28,7 +28,7 @@ sub new {
 
 sub validate {
     my ($self, $maybe_argument) = @_;
-    my $argument = $maybe_argument // $self->default;
+    my $argument = $maybe_argument // $self->{default};
     $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
