@@ -7,7 +7,7 @@ use Scalar::Util ();
 use Type::Utils ();
 use Types::Standard ();
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameters Method::Frame::Domain::Interfaces::Frame::HashParameters);
+use parent qw(Method::Frame::Domain::ComparisonFrame::Parameters Method::Frame::Domain::Module::Frame::HashParameters);
 
 # override
 sub _type { 'hash' }

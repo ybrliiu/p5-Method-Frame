@@ -1,4 +1,4 @@
-package Method::Frame::Domain::Interfaces::Frame::Parameter;
+package Method::Frame::Domain::Module::Frame::Parameter;
 
 use Method::Frame::Base;
 

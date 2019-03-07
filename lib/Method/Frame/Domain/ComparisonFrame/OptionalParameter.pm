@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::DefaultParameter Method::Frame::Domain::Interfaces::Frame::OptionalParameter);
+use parent qw(Method::Frame::Domain::ComparisonFrame::DefaultParameter Method::Frame::Domain::Module::Frame::OptionalParameter);
 
 # override
 sub new {
@@ -14,7 +14,7 @@ sub new {
     my $constraint = do {
         if ( 
             Scalar::Util::blessed($_[0]) &&
-            $_[0]->isa('Method::Frame::Domain::Interfaces::Frame::OptionalParameter')
+            $_[0]->isa('Method::Frame::Domain::Module::Frame::OptionalParameter')
         ) {
             $_[0]->constraint;
         }

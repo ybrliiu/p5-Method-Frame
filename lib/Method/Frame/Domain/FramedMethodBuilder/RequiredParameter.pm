@@ -6,7 +6,7 @@ use Carp ();
 use Method::Frame::Util;
 use Method::Frame::Domain::ComparisonFrame::RequiredParameter;
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Interfaces::Frame::RequiredParameter);
+use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Module::Frame::RequiredParameter);
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;

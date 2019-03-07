@@ -7,7 +7,7 @@ use Type::Utils ();
 use Types::Standard ();
 use Method::Frame::Domain::ComparisonFrame::ListParameters;
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameters Method::Frame::Domain::Interfaces::Frame::ListParameters);
+use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameters Method::Frame::Domain::Module::Frame::ListParameters);
 
 # override
 sub new {

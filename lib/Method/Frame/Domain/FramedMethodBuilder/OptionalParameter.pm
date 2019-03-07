@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Domain::ComparisonFrame::OptionalParameter;
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::DefaultParameter Method::Frame::Domain::Interfaces::Frame::OptionalParameter);
+use parent qw(Method::Frame::Domain::FramedMethodBuilder::DefaultParameter Method::Frame::Domain::Module::Frame::OptionalParameter);
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;

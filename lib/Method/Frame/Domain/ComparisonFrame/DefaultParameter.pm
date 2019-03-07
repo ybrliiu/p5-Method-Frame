@@ -2,7 +2,7 @@ package Method::Frame::Domain::ComparisonFrame::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Interfaces::Frame::DefaultParameter);
+use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Module::Frame::DefaultParameter);
 
 use Carp ();
 use Scalar::Util ();
@@ -18,7 +18,7 @@ sub new {
         if ( @_ == 1 ) {
             if ( 
                 Scalar::Util::blessed($_[0]) &&
-                $_[0]->isa('Method::Frame::Domain::Interfaces::Frame::DefaultParameter')
+                $_[0]->isa('Method::Frame::Domain::Module::Frame::DefaultParameter')
             ) {
                 ( $_[0]->constraint, $_[0]->default );
             }

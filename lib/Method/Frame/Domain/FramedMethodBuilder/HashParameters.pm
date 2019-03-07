@@ -7,7 +7,7 @@ use Type::Utils ();
 use Types::Standard ();
 use Method::Frame::Domain::ComparisonFrame::HashParameters;
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameters Method::Frame::Domain::Interfaces::Frame::HashParameters);
+use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameters Method::Frame::Domain::Module::Frame::HashParameters);
 
 # override
 sub new {

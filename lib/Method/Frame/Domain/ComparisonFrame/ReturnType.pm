@@ -6,7 +6,7 @@ use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
 
-use parent 'Method::Frame::Domain::Interfaces::Frame::ReturnType';
+use parent 'Method::Frame::Domain::Module::Frame::ReturnType';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
@@ -14,7 +14,7 @@ sub new {
     my $constraint = do {
         if ( 
             Scalar::Util::blessed($_[0]) &&
-            $_[0]->isa('Method::Frame::Domain::Interfaces::Frame::ReturnType')
+            $_[0]->isa('Method::Frame::Domain::Module::Frame::ReturnType')
         ) {
             $_[0]->constraint;
         }

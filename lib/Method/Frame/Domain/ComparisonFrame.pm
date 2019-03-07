@@ -6,7 +6,7 @@ use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
 
-use parent 'Method::Frame::Domain::Interfaces::Frame';
+use parent 'Method::Frame::Domain::Module::Frame';
 
 sub new {
     my ($class, %args) = @_;

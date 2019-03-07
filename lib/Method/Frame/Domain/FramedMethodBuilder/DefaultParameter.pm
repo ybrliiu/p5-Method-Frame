@@ -7,7 +7,7 @@ use Scalar::Util ();
 use Method::Frame::Util;
 use Method::Frame::Domain::ComparisonFrame::DefaultParameter;
 
-use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Interfaces::Frame::DefaultParameter);
+use parent qw(Method::Frame::Domain::FramedMethodBuilder::Parameter Method::Frame::Domain::Module::Frame::DefaultParameter);
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 3;

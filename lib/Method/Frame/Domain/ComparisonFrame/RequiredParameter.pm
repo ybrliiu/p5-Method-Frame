@@ -2,7 +2,7 @@ package Method::Frame::Domain::ComparisonFrame::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Interfaces::Frame::RequiredParameter);
+use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Module::Frame::RequiredParameter);
 
 use Carp ();
 use Method::Frame::Util;
@@ -14,7 +14,7 @@ sub new {
     my $constraint = do {
         if ( 
             Scalar::Util::blessed($_[0]) &&
-            $_[0]->isa('Method::Frame::Domain::Interfaces::Frame::RequiredParameter')
+            $_[0]->isa('Method::Frame::Domain::Module::Frame::RequiredParameter')
         ) {
             $_[0]->constraint;
         }

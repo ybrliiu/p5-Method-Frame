@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 
-use parent 'Method::Frame::Domain::Interfaces::Frame::Parameter';
+use parent 'Method::Frame::Domain::Module::Frame::Parameter';
 
 sub new { Carp::croak 'This is abstract method.' }
 

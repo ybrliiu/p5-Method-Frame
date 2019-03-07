@@ -8,7 +8,7 @@ use Type::Utils ();
 use Types::Standard ();
 use Method::Frame::Domain::ComparisonFrame::Parameter;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameters Method::Frame::Domain::Interfaces::Frame::ListParameters);
+use parent qw(Method::Frame::Domain::ComparisonFrame::Parameters Method::Frame::Domain::Module::Frame::ListParameters);
 
 # override
 sub _type { 'list' }

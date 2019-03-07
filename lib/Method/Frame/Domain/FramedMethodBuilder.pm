@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Domain::Module::Class::FramedMethod;
 
-use parent 'Method::Frame::Domain::Interfaces::FramedMethod';
+use parent 'Method::Frame::Domain::Module::FramedMethod';
 
 sub new {
     my ($class, %args) = @_;

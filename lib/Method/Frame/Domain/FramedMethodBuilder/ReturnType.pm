@@ -7,7 +7,7 @@ use Scalar::Util ();
 use Method::Frame::Util;
 use Method::Frame::Domain::ComparisonFrame::ReturnType;
 
-use parent 'Method::Frame::Domain::Interfaces::Frame::ReturnType';
+use parent 'Method::Frame::Domain::Module::Frame::ReturnType';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;

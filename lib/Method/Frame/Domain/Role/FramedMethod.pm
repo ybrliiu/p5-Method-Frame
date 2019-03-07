@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Domain::Role::RequiredFramedMethod;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame Method::Frame::Domain::Interfaces::FramedMethod);
+use parent qw(Method::Frame::Domain::ComparisonFrame Method::Frame::Domain::Module::FramedMethod);
 
 sub new {
     my ($class, %args) = @_;

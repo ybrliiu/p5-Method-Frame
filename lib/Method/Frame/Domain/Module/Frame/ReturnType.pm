@@ -1,4 +1,4 @@
-package Method::Frame::Domain::Interfaces::Frame::ReturnType;
+package Method::Frame::Domain::Module::Frame::ReturnType;
 
 use Method::Frame::Base;
 
