@@ -25,7 +25,6 @@ sub new {
     }, $class;
 }
 
-# TODO: DELETE THIS METHOD
 sub name { shift->{name} }
 
 sub build {
@@ -45,7 +44,7 @@ sub build {
     };
 }
 
-sub as_class_framed_method {
+sub as_module_framed_method {
     my $self = shift;
     Method::Frame::Domain::Module::FramedMethod->new(
         name        => $self->{name},

@@ -8,7 +8,7 @@ use Method::Frame::Domain::SymbolTableOperator;
 
 use Class::Accessor::Lite (
     new => 0,
-    ro => [qw( name framed_methods symbol_table_operator )]
+    ro => [qw( name framed_methods )]
 );
 
 sub new {
@@ -29,12 +29,12 @@ sub add_framed_method {
     Carp::croak 'Parameter does not FrameMethodBuilder object.'
         unless $framed_method_builder->isa('Method::Frame::Domain::FramedMethodBuilder');
 
-    my $framed_method = $framed_method_builder->as_class_framed_method();
-    if ( my $err = $self->framed_methods->add($framed_method) ) {
+    my $framed_method = $framed_method_builder->as_module_framed_method();
+    if ( my $err = $self->{framed_methods}->add($framed_method) ) {
         $err;
     }
     else {
-        my $maybe_err = $self->symbol_table_operator->add_subroutine(
+        my $maybe_err = $self->{symbol_table_operator}->add_subroutine(
             $framed_method_builder->name,
             $framed_method_builder->build
         );
