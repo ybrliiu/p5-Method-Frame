@@ -6,25 +6,20 @@ use Carp ();
 use Scalar::Util ();
 use Type::Utils ();
 use Types::Standard ();
-use Method::Frame::Domain::ComparisonFrame::Parameter;
+use Role::Tiny::With qw( with );
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameters Method::Frame::Domain::Module::Frame::ListParameters);
+with qw( Method::Frame::Domain::ComparisonFrame::Parameters );
 
-# override
 sub _type { 'list' }
 
-# override
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $list) = @_;
-    {
-    
-        state $constraint = do {
-            my $class_name = 'Method::Frame::Domain::ComparisonFrame::Parameter';
-            Types::Standard::ArrayRef([ Type::Utils::class_type($class_name) ]);
-        };
-        Carp::croak $constraint->get_message($list) unless $constraint->check($list);
-    }
+    state $constraint = do {
+        my $class_name = 'Method::Frame::Domain::ComparisonFrame::Parameter';
+        Types::Standard::ArrayRef([ Type::Utils::role_type($class_name) ]);
+    };
+    Carp::croak $constraint->get_message($list) unless $constraint->check($list);
 
     bless +{
         list => $list,
@@ -35,12 +30,11 @@ sub new {
 sub _compare_num {
     my ($self, $params) = @_;
 
-    $self->num == $params->num
+    $self->{num} == $params->{num}
         ? undef
-        : qq{Number of Parameters is different. (@{[ $self->num ]} vs @{[ $params->num ]})};
+        : qq{Number of Parameters is different. ($self->{num} vs $params->{num})};
 }
 
-# override
 sub _compare_each_parameters {
     my ($self, $params) = @_;
 
@@ -58,8 +52,8 @@ sub _compare_each_parameters {
             my ($i, $param, $target) = @$_;
             [ $i, $param->compare($target) ];
         }
-        map { [ $_, $self->list->[$_], $params->list->[$_] ] }
-        0 .. $self->num - 1;
+        map { [ $_, $self->{list}->[$_], $params->{list}->[$_] ] }
+        0 .. $self->{num} - 1;
     \@errors;
 }
 

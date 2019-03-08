@@ -4,12 +4,11 @@ use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();
+use Role::Tiny;
 
-use parent 'Method::Frame::Domain::Module::Frame::Parameter';
+requires 'new';
 
-sub new { Carp::croak 'This is abstract method.' }
-
-sub _type { Carp::croak 'This is abstract method.' }
+requires '_type';
 
 sub _compare_type {
     my ($self, $param) = @_;
@@ -22,15 +21,15 @@ sub _compare_type {
 sub _compare_constraint {
     my ($self, $param) = @_;
 
-    $self->constraint->equals( $param->constraint )
+    $self->{constraint}->equals( $param->{constraint} )
         ? undef
         : q{constraint is different. }
-            . "(@{[ $self->constraint->name ]} vs @{[ $param->constraint->name ]})";
+            . "(@{[ $self->{constraint}->name ]} vs @{[ $param->{constraint}->name ]})";
 }
 
 sub compare {
     my ($self, $param) = @_;
-    Carp::croak 'Argument must be MetaParameter object.' unless $param->isa(__PACKAGE__);
+    Carp::croak 'Argument must be MetaParameter object.' unless $param->DOES(__PACKAGE__);
 
     for my $maybe_err (
         $self->_compare_type($param),

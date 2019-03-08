@@ -6,8 +6,6 @@ use Carp ();
 use Scalar::Util ();
 use Method::Frame::Util;
 
-use parent 'Method::Frame::Domain::Module::Frame';
-
 sub new {
     my ($class, %args) = @_;
 
@@ -16,7 +14,7 @@ sub new {
     }
 
     Carp::croak q{Argument 'params' is not Parameters object.'}
-        unless $args{params}->isa('Method::Frame::Domain::ComparisonFrame::Parameters');
+        unless $args{params}->DOES('Method::Frame::Domain::ComparisonFrame::Parameters');
 
     Carp::croak q{Argument 'return_type' is not ReturnType object.'}
         unless $args{return_type}->isa('Method::Frame::Domain::ComparisonFrame::ReturnType');
@@ -31,13 +29,13 @@ sub new {
 sub compare {
     my ($self, $frame) = @_;
 
-    if ( $self->name ne $frame->name ) {
-        [ "Frame name is different. (@{[ $self->name ]} vs @{[ $frame->name ]})" ];
+    if ( $self->{name} ne $frame->{name} ) {
+        [ "Frame name is different. ($self->{name} vs $frame->{name})" ];
     }
     else {
         [
-            @{ $self->params->compare( $frame->params ) },
-            @{ $self->return_type->compare( $frame->return_type ) },
+            @{ $self->{params}->compare( $frame->{params} ) },
+            @{ $self->{return_type}->compare( $frame->{return_type} ) },
         ]
     }
 }

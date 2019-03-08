@@ -3,12 +3,11 @@ package Method::Frame::Domain::ComparisonFrame::Parameters;
 use Method::Frame::Base;
 
 use Carp ();
+use Role::Tiny;
 
-use parent 'Method::Frame::Domain::Module::Frame::Parameters';
+requires '_type';
 
-sub _type { Carp::croak 'This is abstract method.' }
-
-sub new { Carp::croak 'This is abstract method.' }
+requires 'new';
 
 sub _compare_type {
     my ($self, $params) = @_;

@@ -2,15 +2,16 @@ package Method::Frame::Domain::ComparisonFrame::DefaultParameter;
 
 use Method::Frame::Base;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Module::Frame::DefaultParameter);
-
 use Carp ();
 use Scalar::Util ();
 use Data::Dumper ();
 use Method::Frame::Util;
 use Method::Frame::Domain::ComparisonFrame::ValuesEqualityChecker qw( value_equals );
+use Class::Method::Modifiers qw( around );
+use Role::Tiny::With qw( with );
 
-# override
+with qw( Method::Frame::Domain::ComparisonFrame::Parameter );
+
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my $class = shift;
@@ -48,7 +49,6 @@ sub new {
     }, $class;
 }
 
-# override
 sub _type { 'default' }
 
 sub _dumper {
@@ -60,7 +60,6 @@ sub _dumper {
 
 sub _different_default_message {
     my ($class, $self_default, $param_default) = @_;
-
     "default value is different. (@{[ _dumper($self_default) ]} vs @{[ _dumper($param_default) ]})";
 }
 
@@ -71,25 +70,24 @@ sub _compare_default {
     # assert _compare_type
     # assert _compare_constraint
 
-    value_equals($self->default, $param->default)
+    value_equals($self->{default}, $param->{default})
         ? undef
-        : $self->_different_default_message($self->default, $param->default);
+        : $self->_different_default_message($self->{default}, $param->{default});
 }
 
-# override
-sub compare {
-    my ($self, $param) = @_;
+around compare => sub {
+    my ($orig, $self, $param) = @_;
     Carp::croak 'Argument must be MetaParameter object.'
-        unless $param->isa('Method::Frame::Domain::ComparisonFrame::Parameter');
+        unless $param->DOES('Method::Frame::Domain::ComparisonFrame::Parameter');
 
     for my $maybe_err (
-        $self->SUPER::compare($param),
+        $self->$orig($param),
         $self->_compare_default($param)
     ) {
         return $maybe_err if defined $maybe_err;
     }
 
     undef;
-}
+};
 
 1;

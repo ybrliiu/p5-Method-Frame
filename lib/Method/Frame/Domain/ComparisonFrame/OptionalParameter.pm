@@ -5,7 +5,7 @@ use Method::Frame::Base;
 use Carp ();
 use Scalar::Util ();
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::DefaultParameter Method::Frame::Domain::Module::Frame::OptionalParameter);
+use parent qw( Method::Frame::Domain::ComparisonFrame::DefaultParameter );
 
 # override
 sub new {

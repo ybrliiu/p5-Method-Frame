@@ -2,12 +2,12 @@ package Method::Frame::Domain::ComparisonFrame::RequiredParameter;
 
 use Method::Frame::Base;
 
-use parent qw(Method::Frame::Domain::ComparisonFrame::Parameter Method::Frame::Domain::Module::Frame::RequiredParameter);
-
 use Carp ();
 use Method::Frame::Util;
+use Role::Tiny::With qw( with );
 
-# override
+with qw( Method::Frame::Domain::ComparisonFrame::Parameter );
+
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my $class = shift;
@@ -29,7 +29,6 @@ sub new {
     bless +{ constraint => $constraint }, $class;
 }
 
-# override
 sub _type { 'required' }
 
 1;

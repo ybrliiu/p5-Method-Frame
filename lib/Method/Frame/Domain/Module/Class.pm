@@ -44,6 +44,15 @@ sub new {
                 Method::Frame::Domain::Module::SymbolTableOperator->new($args{name});
             }
         },
+        consumed_role_names => do {
+            if ( exists $args{consumed_role_names} ) {
+                Carp::croak "Argument 'consumed_role_names' is not ArrayRef"
+                    unless ref $args{consumed_role_names} eq 'ARRAY';
+            }
+            else {
+                [];
+            }
+        },
     }, $class;
 }
 

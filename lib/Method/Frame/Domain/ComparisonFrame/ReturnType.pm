@@ -35,7 +35,7 @@ sub _compare_constraint {
     $self->constraint->equals( $return_type->constraint )
         ? undef
         : q{ReturnType constraint is different. }
-            . "(@{[ $self->constraint->name ]} vs @{[ $return_type->constraint->name ]})";
+            . "(@{[ $self->{constraint}->name ]} vs @{[ $return_type->{constraint}->name ]})";
 }
 
 sub compare {
