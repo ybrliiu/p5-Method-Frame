@@ -4,7 +4,6 @@ use Method::Frame::Base;
 
 use Carp ();
 use Method::Frame::Util;
-use Method::Frame::Domain::Module::Frame::RequiredParameter;
 use Role::Tiny::With qw( with );
 
 with 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
@@ -24,11 +23,6 @@ sub validate {
     $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
-}
-
-sub as_module_parameter {
-    my $self = shift;
-    Method::Frame::Domain::Module::Frame::RequiredParameter->new($self->{constraint});
 }
 
 1;

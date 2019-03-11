@@ -7,6 +7,4 @@ requires 'new';
 
 requires 'validate';
 
-requires 'as_module_parameters';
-
 1;

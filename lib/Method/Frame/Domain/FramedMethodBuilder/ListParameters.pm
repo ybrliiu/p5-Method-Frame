@@ -45,10 +45,4 @@ sub validate {
     ( \@valid_args, undef );
 }
 
-sub as_module_parameters {
-    my $self = shift;
-    my @params = map { $_->as_module_parameter() } @{ $self->{list} };
-    Method::Frame::Domain::Module::Frame::ListParameters->new(\@params);
-}
-
 1;

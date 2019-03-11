@@ -4,8 +4,7 @@ use Method::Frame::Base;
 
 use Carp ();
 use Scalar::Util ();
-use Method::Frame::Util;
-use Method::Frame::Domain::Module::Frame::DefaultParameter;
+use Method::Frame::Util qw( object_isa );
 use Role::Tiny::With qw( with );
 
 with 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
@@ -32,12 +31,6 @@ sub validate {
     $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
-}
-
-sub as_module_parameter {
-    my $self = shift;
-    Method::Frame::Domain::Module::Frame::DefaultParameter
-        ->new($self->{constraint}, $self->{default});
 }
 
 1;

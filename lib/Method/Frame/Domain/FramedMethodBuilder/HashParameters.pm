@@ -45,10 +45,4 @@ sub validate {
     ( \@valid_args, undef );
 }
 
-sub as_module_parameters {
-    my $self = shift;
-    my %params = map { $_ => $self->{hash}->{$_}->as_module_parameter } keys %{ $self->{hash} };
-    Method::Frame::Domain::Module::Frame::HashParameters->new(\%params);
-}
-
 1;

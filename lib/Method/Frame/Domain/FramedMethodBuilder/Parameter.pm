@@ -7,8 +7,6 @@ requires 'new';
 
 requires 'validate';
 
-requires 'as_module_parameter';
-
 sub _failed_message {
     my ($self, $argument) = @_;
     qq{Parameter does not pass type constraint '$self->{constraint}' }
