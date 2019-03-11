@@ -5,7 +5,6 @@ use Method::Frame::Base;
 use Carp ();
 use Type::Utils ();
 use Types::Standard ();
-use Method::Frame::Domain::Module::Frame::ListParameters;
 use Role::Tiny::With qw( with );
 
 with 'Method::Frame::Domain::FramedMethodBuilder::Parameters';

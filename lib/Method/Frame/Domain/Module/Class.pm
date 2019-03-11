@@ -6,6 +6,7 @@ use Carp ();
 use Method::Frame::Util qw( object_isa );
 use Method::Frame::Domain::Module::Class::FramedMethods;
 use Method::Frame::Domain::Module::SymbolTableOperator;
+use Method::Frame::Domain::FramedMethodBuilder;
 
 use Class::Accessor::Lite (
     new => 0,
@@ -58,11 +59,16 @@ sub new {
 
 sub add_framed_method {
     Carp::croak 'Too few argument.' if @_ < 2;
-    my ($self, $framed_method_builder) = @_;
-    Carp::croak 'Parameter does not FrameMethodBuilder object.'
-        unless object_isa($framed_method_builder, 'Method::Frame::Domain::FramedMethodBuilder');
+    my ($self, $framed_method) = @_;
+    Carp::croak 'Parameter is not FrameMethodBuilder object.'
+        unless object_isa($framed_method, 'Method::Frame::Domain::Module::FrameMethod');
 
-    my $framed_method = $framed_method_builder->as_module_framed_method();
+    my $framed_method_builder = Method::Frame::Domain::FramedMethodBuilder->new(
+        name => $framed_method->name,
+        return_type => $framed_method->return_type,
+        params => 
+    );
+
     if ( my $err = $self->{framed_methods}->add($framed_method) ) {
         $err;
     }

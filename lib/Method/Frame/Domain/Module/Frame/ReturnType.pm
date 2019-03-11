@@ -7,4 +7,11 @@ use Class::Accessor::Lite (
     ro  => [qw( constraint )],
 );
 
+use Method::Frame::Domain::FramedMethodBuilder::ReturnType;
+
+sub as_framed_method_builder {
+    my $self = shift;
+    Method::Frame::Domain::FramedMethodBuilder::ReturnType->new($self->{constraint});
+}
+
 1;
