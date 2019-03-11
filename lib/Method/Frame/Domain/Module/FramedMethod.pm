@@ -2,23 +2,25 @@ package Method::Frame::Domain::Module::FramedMethod;
 
 use Method::Frame::Base;
 
-use Carp ();
-
-use parent 'Method::Frame::Domain::Module::Frame';
-
 use Class::Accessor::Lite (
-    new => 0,
+    new => 1,
     ro  => [qw( code )],
 );
 
-# override
-sub new {
-    my ($class, %args) = @_;
-    Carp::croak q{Argument 'code' is not CodeRef.} unless $args{code} ne 'CODE';
+use Carp ();
+use Role::Tiny::With qw( with );
+use Method::Frame::Domain::FramedMethodBuilder;
 
-    my $self = $class->SUPER::new(%args);
-    $self->{code} = $args{code};
-    $self;
+with 'Method::Frame::Domain::Module::Frame';
+
+sub as_framed_method_builder {
+    my $self = shift;
+    Method::Frame::Domain::FramedMethodBuilder->new(
+        name        => $self->{name},
+        params      => $self->{params}->as_framed_method_builder(),
+        return_type => $self->{return_type}->as_framed_method_builder(),
+        code        => $self->{code},
+    );
 }
 
 1;

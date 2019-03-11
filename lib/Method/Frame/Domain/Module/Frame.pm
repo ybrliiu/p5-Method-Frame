@@ -1,6 +1,7 @@
 package Method::Frame::Domain::Module::Frame;
 
 use Method::Frame::Base;
+use Role::Tiny;
 
 use Class::Accessor::Lite (
     new => 1,

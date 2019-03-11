@@ -1,7 +1,8 @@
 package Method::Frame::Domain::Module::RequiredFramedMethod;
 
 use Method::Frame::Base;
+use Role::Tiny::With qw( with );
 
-use parent 'Method::Frame::Domain::Module::Frame';
+with 'Method::Frame::Domain::Module::Frame';
 
 1;

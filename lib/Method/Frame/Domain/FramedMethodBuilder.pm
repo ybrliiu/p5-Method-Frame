@@ -3,7 +3,6 @@ package Method::Frame::Domain::FramedMethodBuilder;
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Domain::Module::FramedMethod;
 
 sub new {
     my ($class, %args) = @_;
@@ -42,16 +41,6 @@ sub build {
         }
         $return_value;
     };
-}
-
-sub as_module_framed_method {
-    my $self = shift;
-    Method::Frame::Domain::Module::FramedMethod->new(
-        name        => $self->{name},
-        params      => $self->{params}->as_module_parameters(),
-        return_type => $self->{return_type}->as_module_return_type(),
-        code        => $self->{code},
-    );
 }
 
 1;
