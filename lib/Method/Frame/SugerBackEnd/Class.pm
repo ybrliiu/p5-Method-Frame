@@ -5,14 +5,14 @@ use Method::Frame::Base;
 use Carp ();
 use Method::Frame::Store::MetaClassStore;
 use Method::Frame::Domain::Module::Class;
-use Method::Frame::Domain::Module::Frame;
+use Method::Frame::Domain::Module::FramedMethod;
 use Method::Frame::Domain::Module::ParametersFactory;
 use Method::Frame::Domain::Module::ReturnTypeFactory;
 
 # alias 
 use constant +{
-    ParametersFactory => 'Method::Frame::Domain::Module::Frame::ParametersFactory',
-    ReturnTypeFactory => 'Method::Frame::Domain::Module::Frame::ReturnTypeFactory',
+    ParametersFactory => 'Method::Frame::Domain::Module::ParametersFactory',
+    ReturnTypeFactory => 'Method::Frame::Domain::Module::ReturnTypeFactory',
 };
 
 sub add_framed_method {
@@ -21,7 +21,7 @@ sub add_framed_method {
     my $meta_class = Method::Frame::Store::MetaClassStore->maybe_get($class_name)
         // Method::Frame::Domain::Module::Class->new(name => $class_name);
 
-    my $framed_method = Method::Frame::Domain::Module::FrameMethod->new(
+    my $framed_method = Method::Frame::Domain::Module::FramedMethod->new(
         name        => $method_options->{name},
         params      => ParametersFactory->create($method_options->{params}),
         return_type => ReturnTypeFactory->create($method_options->{return_type}),

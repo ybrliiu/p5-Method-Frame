@@ -9,7 +9,7 @@ use Method::Frame::Domain::Module::Frame::HashParameters;
 use Method::Frame::Domain::Module::ParameterFactory;
 
 # alias 
-use constant ParameterFactory => 'Method::Frame::Domain::Module::Frame::ParameterFactory';
+use constant ParameterFactory => 'Method::Frame::Domain::Module::ParameterFactory';
 
 sub create {
     Carp::croak 'Too few arguments' if @_ < 2;

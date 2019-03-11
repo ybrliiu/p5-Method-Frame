@@ -5,15 +5,12 @@ use Method::Frame::Base;
 use Carp ();
 use Type::Utils ();
 use Types::Standard ();
-
-use Class::Accessor::Lite (
-    new => 0,
-    ro => [qw( map )],
-);
+use Method::Frame::Util qw( object_isa );
 
 sub new {
-    Carp::croak 'Too few arguments' if @_ < 2;
-    my ($class, $framed_methods) = @_;
+    Carp::croak 'Too few arguments' if @_ < 3;
+    my ($class, $framed_methods, $symbol_table_operator) = @_;
+
     state $constraint = do {
         my $class_name = 'Method::Frame::Domain::Module::FramedMethod';
         Types::Standard::ArrayRef([Type::Utils::class_type($class_name)]);
@@ -21,7 +18,17 @@ sub new {
     Carp::croak $constraint->get_message($framed_methods)
         unless $constraint->check($framed_methods);
 
-    bless +{ map => +{ map { $_->name => $_ } @$framed_methods } }, $class;
+    my $is_symbol_table_operator = object_isa(
+        $symbol_table_operator,
+        'Method::Frame::Domain::Module::SymbolTableOperator',
+    );
+    Carp::croak "Argument 'symbol_table_operator' is not SymbolTableOperator object"
+        unless $is_symbol_table_operator;
+
+    bless +{
+        map                   => +{ map { $_->name => $_ } @$framed_methods },
+        symbol_table_operator => $symbol_table_operator,
+    }, $class;
 }
 
 sub has {
@@ -29,7 +36,7 @@ sub has {
     Carp::croak 'Parameter does not FrameMethod object.'
         unless $framed_method->isa('Method::Frame::Domain::Module::FramedMethod');
 
-    exists $self->map->{$framed_method->name};
+    exists $self->{map}->{$framed_method->name};
 }
 
 sub add {
@@ -41,7 +48,9 @@ sub add {
         "Framed method '@{[ $framed_method->name ]}' is already exists.";
     }
     else {
-        $self->map->{$framed_method->name} = $framed_method;
+        $self->{map}->{$framed_method->name} = $framed_method;
+        my $builder = $framed_method->as_framed_method_builder();
+        $self->{symbol_table_operator}->add_subroutine($framed_method->name, $builder->build());
         undef;
     }
 }

@@ -6,7 +6,6 @@ use Carp ();
 use Method::Frame::Util qw( object_isa );
 use Method::Frame::Domain::Module::Class::FramedMethods;
 use Method::Frame::Domain::Module::SymbolTableOperator;
-use Method::Frame::Domain::FramedMethodBuilder;
 
 use Class::Accessor::Lite (
     new => 0,
@@ -16,6 +15,20 @@ use Class::Accessor::Lite (
 sub new {
     my ($class, %args) = @_;
     Carp::croak "Missing argument 'name'" unless $args{name};
+
+    my $symbol_table_operator = do {
+        if ( exists $args{symbol_table_operator} ) {
+            my $is_symbol_table_operator = object_isa(
+                $args{symbol_table_operator},
+                'Method::Frame::Domain::Module::SymbolTableOperator',
+            );
+            Carp::croak "Argument 'symbol_table_operator' is not SymbolTableOperator object"
+                unless $is_symbol_table_operator;
+        }
+        else {
+            Method::Frame::Domain::Module::SymbolTableOperator->new($args{name});
+        }
+    };
 
     bless +{
         name           => $args{name},
@@ -29,23 +42,11 @@ sub new {
                     unless $is_framed_methods;
             }
             else {
-                Method::Frame::Domain::Module::Class::FramedMethods->new([]);
+                Method::Frame::Domain::Module::Class::FramedMethods->new([], $symbol_table_operator);
             }
         },
-        symbol_table_operator => do {
-            if ( exists $args{symbol_table_operator} ) {
-                my $is_symbol_table_operator = object_isa(
-                    $args{symbol_table_operator},
-                    'Method::Frame::Domain::Module::SymbolTableOperator',
-                );
-                Carp::croak "Argument 'symbol_table_operator' is not SymbolTableOperator object"
-                    unless $is_symbol_table_operator;
-            }
-            else {
-                Method::Frame::Domain::Module::SymbolTableOperator->new($args{name});
-            }
-        },
-        consumed_role_names => do {
+        symbol_table_operator => $symbol_table_operator,
+        consumed_role_names   => do {
             if ( exists $args{consumed_role_names} ) {
                 Carp::croak "Argument 'consumed_role_names' is not ArrayRef"
                     unless ref $args{consumed_role_names} eq 'ARRAY';
@@ -60,25 +61,10 @@ sub new {
 sub add_framed_method {
     Carp::croak 'Too few argument.' if @_ < 2;
     my ($self, $framed_method) = @_;
-    Carp::croak 'Parameter is not FrameMethodBuilder object.'
-        unless object_isa($framed_method, 'Method::Frame::Domain::Module::FrameMethod');
+    Carp::croak 'Parameter is not FramedMethod object.'
+        unless object_isa($framed_method, 'Method::Frame::Domain::Module::FramedMethod');
 
-    my $framed_method_builder = Method::Frame::Domain::FramedMethodBuilder->new(
-        name => $framed_method->name,
-        return_type => $framed_method->return_type,
-        params => 
-    );
-
-    if ( my $err = $self->{framed_methods}->add($framed_method) ) {
-        $err;
-    }
-    else {
-        my $maybe_err = $self->{symbol_table_operator}->add_subroutine(
-            $framed_method_builder->name,
-            $framed_method_builder->build
-        );
-        $maybe_err;
-    }
+    my $maybe_err = $self->{framed_methods}->add($framed_method);
 }
 
 1;
