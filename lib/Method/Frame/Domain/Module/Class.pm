@@ -9,7 +9,7 @@ use Method::Frame::Domain::Module::SymbolTableOperator;
 
 use Class::Accessor::Lite (
     new => 0,
-    ro => [qw( name framed_methods )]
+    ro => [qw( name )]
 );
 
 sub new {
