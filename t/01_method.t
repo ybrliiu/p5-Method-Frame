@@ -1,5 +1,4 @@
 use Test2::V0;
-use Test::Spec qw/ describe it runtests /;
 
 package Math {
 
@@ -26,23 +25,20 @@ package Math {
 
 }
 
-describe 'hoge' => sub {
-it 'all parameters type and return type is matched' => sub {
+subtest 'all parameters type and return type is matched' => sub {
     is( Math->add(2, 5), 7 );
 };
 
-it 'parameter mismatch' => sub {
+subtest 'parameter mismatch' => sub {
     ok(my $e = dies { Math->add("string", "string") });
     my $err_mes = quotemeta q{0Th Parameter does not pass type constraint 'Int' because : Argument value is 'string'.};
     like $e, qr!^${err_mes}!;
 };
 
-it 'return type mismatch' => sub {
+subtest 'return type mismatch' => sub {
     ok(my $e = dies { Math->minus(5, 3) });
     my $err_mes = quotemeta q{Method 'minus's Return type does not pass type constraint 'Int' because : Method code returns '5 - 3')};
     like $e, qr!^${err_mes}!;
 };
-};
 
-runtests;
-
+done_testing;
