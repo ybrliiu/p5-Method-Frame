@@ -15,3 +15,22 @@
 - Method::Frame::Store
     - モジュールのメタデータを保管する場所
 
+# Role 仕様
+```perl
+package MyApp::SomeClass {
+    use Method::Frame::Loader 'MyApp::SomeRole' => +{ as => 'MyApp' };
+    
+    method do_something => (
+        isa    => Int,
+        params => sub {
+        },
+        code   => sub {
+        },
+    );
+}
+
+package main;
+use Method::Frame::Loader 'MyApp::SomeClass';
+# loaderの中でクラスのロードを行い、最後のロールの適用を行う
+```
+

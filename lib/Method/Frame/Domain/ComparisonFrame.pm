@@ -26,6 +26,8 @@ sub new {
     }, $class;
 }
 
+sub id { shift->{name} }
+
 sub compare {
     my ($self, $frame) = @_;
 

@@ -2,10 +2,13 @@ package Method::Frame::Domain::ApplyRole::Applicable;
 
 use Method::Frame::Base;
 use Role::Tiny;
-
 use Method::Frame::Util;
 
-requires 'add_consumed_role_names';
+use Method::Frame::Domain::ApplyRole::AddedConsumedRoleNameNotifier;
+
+requires 'consume';
+
+requires 'is_name_equals';
 
 requires 'consume_framed_methods';
 
@@ -24,10 +27,24 @@ sub new {
         'Method::Frame::Domain::ApplyRole::DoesMethodInstaller',
     );
 
+    Method::Frame::Util::validate_argument_object_type(
+        added_consumed_role_name_notifier => $args{added_consumed_role_name_notifier},
+        'Method::Frame::Domain::ApplyRole::AddedConsumedRoleNameNotifier',
+    );
+
     bless +{
-        consumed_role_names   => $args{consumed_role_names},
-        does_method_installer => $args{does_method_installer},
+        consumed_role_names               => $args{consumed_role_names},
+        does_method_installer             => $args{does_method_installer},
+        added_consumed_role_name_notifier => $args{added_consumed_role_name_notifier},
     }, $class;
+}
+
+sub add_consumed_role_names {
+    Carp::croak 'Too few arguments.' if @_ < 2;
+    my ($self, $consumed_role_name) = @_;
+
+    $self->{consumed_role_names}->add($consumed_role_name);
+    $self->{added_consumed_role_name_notifier}->notify($consumed_role_name);
 }
 
 sub are_required_framed_methods_implemented {

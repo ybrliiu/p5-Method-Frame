@@ -1,6 +1,5 @@
 theme = maintenance || bugs || security || complexity || performance || unicode
 verbose = [%p]\n    %m at %f line %l, column %c. (Severity: %s)\n\n
-include = Subroutines::ProhibitAmpersandSigils Modules::RequireFilenameMatchesPackage
 
 [Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict]
 equivalent_modules = Method::Frame::Base
