@@ -33,7 +33,7 @@ sub validate {
 
     my @meta_params = @{ $self->{list} };
     my @valid_args = map {
-        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_], [ @args[0 .. $_ - 1] ]);
+        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_]);
         if ( defined $err ) {
             return ( undef, "${_}Th $err" );
         }
