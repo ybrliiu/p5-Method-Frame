@@ -3,7 +3,7 @@ package Method::Frame::Domain::Module::Frame::DefaultParameter;
 use Method::Frame::Base;
 
 use Class::Accessor::Lite (
-    new => 1,
+    new => 0,
     ro  => [qw( default )],
 );
 

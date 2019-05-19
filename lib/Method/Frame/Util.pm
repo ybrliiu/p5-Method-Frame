@@ -11,7 +11,7 @@ our @EXPORT = qw( object_isa validate_argument_object_type );
 sub ensure_type_constraint_object {
     my $constraint = shift;
     for my $required_method (qw[ name equals check get_message ]) {
-        return "constraint object '$constraint' can not call $required_method"
+        return "Constraint object '$constraint' can not call $required_method"
             unless Scalar::Util::blessed($constraint) && $constraint->can($required_method)
     }
     undef;
