@@ -23,17 +23,31 @@ sub new {
 
 sub validate {
     my $self = shift;
-    my $args = ref $_[0] eq 'HASH' ? shift : +{@_};
+    my $orig_args = ref $_[0] eq 'HASH' ? shift : +{@_};
 
     my @param_names = keys %{ $self->{hash} };
-    for my $param_name (@param_names) {
-        return ( undef, "Argument '$param_name' does not exists." ) 
-            unless exists $args->{$param_name};
-    }
+
+    my %args = map {
+        my $param_name = $_;
+        if ( exists $orig_args->{$param_name} ) {
+            $param_name => $orig_args->{$param_name};
+        }
+        else {
+            if ( $self->{hash}{$param_name}
+                ->isa('Method::Frame::Domain::FramedMethodBuilder::DefaultParameter')
+            ) {
+                $param_name => $self->{hash}{$param_name}{default};
+            }
+            else {
+                return (undef, "Argument '$param_name' does not exists.")
+                    unless exists $orig_args->{$param_name};
+            }
+        }
+    } @param_names;
 
     my %meta_params_map = %{ $self->{hash} };
     my @valid_args = map {
-        my ($valid_arg, $err) = $meta_params_map{$_}->validate($args->{$_});
+        my ($valid_arg, $err) = $meta_params_map{$_}->validate($args{$_}, \%args);
         if ( defined $err ) {
             return ( undef, "Argument '$_' $err" );
         }
@@ -41,6 +55,7 @@ sub validate {
             ( $_ => $valid_arg );
         }
     } @param_names;
+
     ( \@valid_args, undef );
 }
 
