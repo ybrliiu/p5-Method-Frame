@@ -35,6 +35,8 @@ sub new {
     }, $class;
 }
 
+sub default :method { $_[0]->{default} }
+
 sub _can_use_for_default {
     my ($class, $default) = @_;
     if ( !ref $default ) {

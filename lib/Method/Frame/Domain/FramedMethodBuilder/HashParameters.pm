@@ -7,15 +7,18 @@ use Type::Utils ();
 use Types::Standard ();
 use Role::Tiny::With qw( with );
 
+# alias
+use constant {
+    Parameter        => 'Method::Frame::Domain::FramedMethodBuilder::Parameter',
+    DefaultParameter => 'Method::Frame::Domain::FramedMethodBuilder::DefaultParameter',
+};
+
 with 'Method::Frame::Domain::FramedMethodBuilder::Parameters';
 
 sub new {
     Carp::croak 'Too few arguments' if @_ < 2;
     my ($class, $hash) = @_;
-    state $constraint = do {
-        my $role_name = 'Method::Frame::Domain::FramedMethodBuilder::Parameter';
-        Types::Standard::HashRef([ Type::Utils::role_type($role_name) ]);
-    };
+    state $constraint = Types::Standard::HashRef([ Type::Utils::role_type(Parameter) ]);
     Carp::croak $constraint->get_message($hash) unless $constraint->check($hash);
 
     bless +{ hash => $hash }, $class;
@@ -33,13 +36,11 @@ sub validate {
             $param_name => $orig_args->{$param_name};
         }
         else {
-            if ( $self->{hash}{$param_name}
-                ->isa('Method::Frame::Domain::FramedMethodBuilder::DefaultParameter')
-            ) {
-                $param_name => $self->{hash}{$param_name}{default};
+            if ( $self->{hash}{$param_name}->isa(DefaultParameter) ) {
+                $param_name => $self->{hash}{$param_name}->default();
             }
             else {
-                return (undef, "Argument '$param_name' does not exists.")
+                return ( undef, "Argument '$param_name' does not exists." )
                     unless exists $orig_args->{$param_name};
             }
         }
