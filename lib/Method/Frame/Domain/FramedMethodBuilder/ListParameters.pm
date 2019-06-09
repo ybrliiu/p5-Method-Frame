@@ -53,7 +53,7 @@ sub validate {
     };
 
     my @valid_args = map {
-        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_], \@args_for_pass_default);
+        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_], @args_for_pass_default);
         if ( defined $err ) {
             return ( undef, "${_}Th $err" );
         }
@@ -65,25 +65,4 @@ sub validate {
 }
 
 1;
-
-
-__END__
-
-
-    # 仮実装
-    # r, r, d1, d2
-    # (1, 1, 1) = (1, 1, 1, d2)
-    # (1, 1)    = (1, 1, d1, d2)
-    # r, d1, r, d2
-    # (1, 1, 1) = (1, 1, 1, d2)
-    # (1, 1)    = (1, d1, 1, d2)
-    # d1, r, d2, r
-    # (1, 1, 1) = (1, 1, d2, 1)
-    # (1, 1)    = (d1, 1, d2, 1)
-    # d1, r, d2, r, d3
-    # (1, 1, 1, 1) = (1, 1, 1, 1, d3)
-    # (1, 1, 1)    = (1, 1, d2, 1, d3)
-    # (1, 1)       = (d1, 1, d2, 1, d3)
-    # デフォルト引数の位置を記録
-    # デフォルト引数のリストを後方から順番に埋める
 

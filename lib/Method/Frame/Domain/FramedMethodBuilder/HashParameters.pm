@@ -26,29 +26,35 @@ sub new {
 
 sub validate {
     my $self = shift;
-    my $orig_args = ref $_[0] eq 'HASH' ? shift : +{@_};
+    my $args = ref $_[0] eq 'HASH' ? shift : +{@_};
 
     my @param_names = keys %{ $self->{hash} };
 
-    my %args = map {
+    my %args_for_pass_default = map {
         my $param_name = $_;
-        if ( exists $orig_args->{$param_name} ) {
-            $param_name => $orig_args->{$param_name};
+        if ( exists $args->{$param_name} ) {
+            $param_name => $self->{hash}{$param_name}->isa(DefaultParameter)
+                ? $self->{hash}{$param_name}->default()
+                : $args->{$param_name};
         }
         else {
             if ( $self->{hash}{$param_name}->isa(DefaultParameter) ) {
                 $param_name => $self->{hash}{$param_name}->default();
             }
             else {
-                return ( undef, "Argument '$param_name' does not exists." )
-                    unless exists $orig_args->{$param_name};
+                return ( undef, "Argument '$param_name' does not exists." );
             }
         }
     } @param_names;
 
+    for my $arg_name (keys %$args) {
+        return ( undef, "Parameter '$arg_name' does not exists." )
+            unless exists $self->{hash}{$arg_name};
+    }
+
     my %meta_params_map = %{ $self->{hash} };
     my @valid_args = map {
-        my ($valid_arg, $err) = $meta_params_map{$_}->validate($args{$_}, \%args);
+        my ($valid_arg, $err) = $meta_params_map{$_}->validate($args->{$_}, %args_for_pass_default);
         if ( defined $err ) {
             return ( undef, "Argument '$_' $err" );
         }

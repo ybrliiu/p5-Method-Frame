@@ -70,7 +70,7 @@ subtest validate => sub {
         my $list_parameters = ListParameters->new([
             DefaultParameter->new(Int, 0),
             RequiredParameter->new(Int),
-            DefaultParameter->new(Int, sub { $_[0] + 10 }),
+            DefaultParameter->new(Int, sub { die if @_ < 1; $_[0] + 10 }),
         ]);
          
         {
