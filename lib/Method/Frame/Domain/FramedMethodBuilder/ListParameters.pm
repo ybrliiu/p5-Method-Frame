@@ -23,40 +23,37 @@ sub new {
     Carp::croak $constraint->get_message($list) unless $constraint->check($list);
 
     bless +{
-        list                  => $list,
-        num                   => scalar(@$list),
-        required_params       => [ grep { $_->isa(RequiredParameter) } @$list ],
-        default_param_indexes => [ grep { $list->[$_]->isa(DefaultParameter) } 0 .. $#$list ],
+        list        => $list,
+        num         => scalar(@$list),
+        use_default => !!( grep { $_->isa(DefaultParameter) } @$list ),
     }, $class;
 }
 
 sub validate {
-    my ($self, @orig_args) = @_;
+    my ($self, @args) = @_;
 
-    my $num         = $self->{num};
+    my $num = $self->{num};
+
+    return ( undef, 'Too many args' ) if @args > $num;
+    return ( undef, 'Too few args' )  if @args < $num;
+
     my @meta_params = @{ $self->{list} };
 
-    return ( undef, 'Too many args' ) if @orig_args > $num;
-
-    return ( undef, 'Too few args' ) if @orig_args < @{ $self->{required_params} };
-
-    my @use_default_param_indexes = do {
-        my $num_diff              = $num - @orig_args;
-        my @default_param_indexes = @{ $self->{default_param_indexes} };
-        @default_param_indexes[ $#default_param_indexes - $num_diff + 1 .. $#default_param_indexes ];
-    };
-    my @args = @orig_args;
-    for my $i ( reverse @use_default_param_indexes ) {
-        if ( $meta_params[$i]->isa(DefaultParameter) ) {
-            splice @args, $_, 1, $meta_params[$i]->default() for reverse @use_default_param_indexes;
+    my @args_for_pass_default = do {
+        if ($self->{use_default}) {
+            map {
+                !defined $args[$_] && $meta_params[$_]->isa(DefaultParameter)
+                    ? $meta_params[$_]->default
+                    : $args[$_]
+            } 0 .. $num - 1;
         }
         else {
-            return ( undef, 'Too few args' );
+            @args;
         }
-    }
+    };
 
     my @valid_args = map {
-        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_], \@args);
+        my ($valid_arg, $err) = $meta_params[$_]->validate($args[$_], \@args_for_pass_default);
         if ( defined $err ) {
             return ( undef, "${_}Th $err" );
         }
