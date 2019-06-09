@@ -76,9 +76,9 @@ sub _validate_default_type {
 }
 
 sub validate {
-    my ($self, $maybe_argument, $post_arguments) = @_;
+    my ($self, $maybe_argument, @other_arguments) = @_;
     my $argument = $maybe_argument
-        // (ref $self->{default} ? $self->{default}->(@$post_arguments) : $self->{default});
+        // (ref $self->{default} ? $self->{default}->(@other_arguments) : $self->{default});
     $self->{constraint}->check($argument)
         ? ( $argument, undef )
         : ( undef, $self->_failed_message($argument) );
