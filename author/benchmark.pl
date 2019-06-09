@@ -38,13 +38,13 @@ package Math {
     }
 
     sub add4 {
-      my $class = shift;
-      state $v = Data::Validator->new(
-          num1 => Int,
-          num2 => Int,
-      )->with(qw[ StrictSequenced ]);
-      my ($num1, $num2) = @{ $v->validate(@_) }{qw( num1 num2 )};
-      $num1 + $num2;
+        my $class = shift;
+        state $v = Data::Validator->new(
+            num1 => 'Int',
+            num2 => 'Int',
+        )->with(qw[ StrictSequenced ]);
+        my ($num1, $num2) = @{ $v->validate(@_) }{qw( num1 num2 )};
+        $num1 + $num2;
     }
 
 }

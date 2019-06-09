@@ -1,7 +1,6 @@
 # 予定
-- Functions::Role::* 系のFactory作成
-- does, DOES のインストール
-- Roleのモジュールへの適用をどうするか
+- Roleの使用
+- Interfaceの廃止
 
 # Method::Frame 機能一覧
 - Frameの比較

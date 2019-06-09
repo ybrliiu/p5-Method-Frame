@@ -6,7 +6,7 @@ use Exporter qw( import );
 our @EXPORT = qw( method );
 
 use Carp ();
-use Method::Frame::Class;
+use Method::Frame::SugerBackEnd::Class;
 
 sub method {
     my ($name, %args) = @_;
@@ -15,7 +15,7 @@ sub method {
         Carp::croak "Missing parameter '$arg_name'" unless $args{$arg_name};
     }
 
-    my $maybe_err = Method::Frame::Class->add_framed_method(
+    my $maybe_err = Method::Frame::SugerBackEnd::Class->add_framed_method(
         (caller)[0],
         +{
             name        => $name,
