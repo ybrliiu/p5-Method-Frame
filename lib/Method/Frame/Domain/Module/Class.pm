@@ -3,7 +3,7 @@ package Method::Frame::Domain::Module::Class;
 use Method::Frame::Base;
 
 use Carp ();
-use Method::Frame::Util qw( object_isa );
+use Method::Frame::Util qw( validate_argument_object_type );
 use Method::Frame::Domain::Module::Class::FramedMethods;
 use Method::Frame::Domain::Module::SymbolTableOperator;
 
@@ -18,12 +18,11 @@ sub new {
 
     my $symbol_table_operator = do {
         if ( exists $args{symbol_table_operator} ) {
-            my $is_symbol_table_operator = object_isa(
-                $args{symbol_table_operator},
-                'Method::Frame::Domain::Module::SymbolTableOperator',
+            validate_argument_object_type(
+                symbol_table_operator => $args{symbol_table_operator},
+                'Method::Frame::Domain::Module::SymbolTableOperator'
             );
-            Carp::croak "Argument 'symbol_table_operator' is not SymbolTableOperator object"
-                unless $is_symbol_table_operator;
+            $args{symbol_table_operator};
         }
         else {
             Method::Frame::Domain::Module::SymbolTableOperator->new($args{name});
@@ -34,12 +33,11 @@ sub new {
         name           => $args{name},
         framed_methods => do {
             if ( exists $args{framed_methods} ) {
-                my $is_framed_methods = object_isa(
-                    $args{framed_methods},
+                validate_argument_object_type(
+                    framed_methods => $args{framed_methods},
                     'Method::Frame::Domain::Module::Class::FramedMethods'
                 );
-                Carp::croak "Argument 'framed_methods' is not FrameMethods object"
-                    unless $is_framed_methods;
+                $args{framed_methods};
             }
             else {
                 Method::Frame::Domain::Module::Class::FramedMethods->new([], $symbol_table_operator);
@@ -50,6 +48,7 @@ sub new {
             if ( exists $args{consumed_role_names} ) {
                 Carp::croak "Argument 'consumed_role_names' is not ArrayRef"
                     unless ref $args{consumed_role_names} eq 'ARRAY';
+                $args{consumed_role_names};
             }
             else {
                 [];
@@ -61,8 +60,7 @@ sub new {
 sub add_framed_method {
     Carp::croak 'Too few argument.' if @_ < 2;
     my ($self, $framed_method) = @_;
-    Carp::croak 'Parameter is not FramedMethod object.'
-        unless object_isa($framed_method, 'Method::Frame::Domain::Module::FramedMethod');
+    validate_argument_object_type($framed_method, 'Method::Frame::Domain::Module::FramedMethod');
 
     my $maybe_err = $self->{framed_methods}->add($framed_method);
 }
