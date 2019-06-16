@@ -10,7 +10,7 @@ use Method::Frame::Domain::Module::RequiredFramedMethod;
 
 use Class::Accessor::Lite (
     new => 0,
-    ro  => [qw( name )]
+    ro  => [qw( name framed_methods required_framed_methods consumed_role_names )]
 );
 
 sub new {
@@ -76,6 +76,21 @@ sub add_required_framed_method {
     );
 
     $self->required_framed_methods->add($required_framed_method);
+}
+
+sub apply {
+    Carp::croak 'Too few argument' if @_ < 2;
+    my ($self, $applicable) = @_;
+    Carp::croak 'Argument is not applicable Object.'
+        unless $applicable->DOES('Method::Frame::Domain::ApplyRole::Applicable');
+
+    my @errors =
+        map { @$_ }
+        (
+            $applicable->consume_framed_methods($self->{framed_methods}),
+            $applicable->consume_required_framed_methods($self->{required_framed_methods}),
+        );
+    \@errors;
 }
 
 1;

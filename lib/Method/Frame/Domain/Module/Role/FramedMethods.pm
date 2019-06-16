@@ -43,4 +43,9 @@ sub add {
     }
 }
 
+sub as_array_ref {
+    my $self = shift;
+    [ keys %{ $self->{map} } ];
+}
+
 1;
